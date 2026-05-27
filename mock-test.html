@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="description" content="Take Udaan Coaching mock tests for IIT-JEE, NEET, and Foundation practice with timed MCQ questions and result review.">
+    <meta name="theme-color" content="#06b6d4">
+    <title>Mock Test | Udaan Institute</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        .test-container {
+            max-width: 1120px;
+            margin: 110px auto 80px;
+            padding: 2rem;
+        }
+        .mock-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+            gap: 2rem;
+            align-items: stretch;
+            margin-bottom: 2rem;
+        }
+        .mock-hero-copy,
+        .mock-side-panel {
+            padding: 2rem;
+        }
+        .mock-points,
+        .test-rules-grid,
+        .result-flow {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+        .mock-points {
+            margin-top: 1.5rem;
+        }
+        .test-rules-grid,
+        .result-flow {
+            margin: 1.5rem 0 2rem;
+        }
+        .mock-point,
+        .test-rule,
+        .result-step {
+            padding: 1rem;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.72);
+        }
+        .mock-point span,
+        .test-rule span,
+        .result-step span {
+            display: block;
+            color: var(--primary-hover);
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+        }
+        .mock-point strong,
+        .test-rule strong,
+        .result-step strong {
+            display: block;
+            color: var(--text-main);
+            font-family: var(--font-heading);
+            line-height: 1.25;
+        }
+        .mock-course-card {
+            min-height: 100%;
+            cursor: pointer;
+        }
+        .mock-course-card ul {
+            display: grid;
+            gap: 0.5rem;
+            margin: 1.2rem 0;
+        }
+        .mock-course-card li {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .mock-course-card li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.65em;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        .mock-card-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(6, 182, 212, 0.16);
+            margin-top: auto;
+        }
+        .mock-card-footer small {
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+        .quiz-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 280px;
+            gap: 1.5rem;
+            align-items: start;
+        }
+        .quiz-side {
+            position: sticky;
+            top: 120px;
+            padding: 1.25rem;
+        }
+        .quiz-side-list {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .quiz-side-list div {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        }
+        .quiz-side-list div:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+        .quiz-side-list span {
+            color: var(--text-muted);
+        }
+        .question-card {
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .options {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .option {
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .option:hover {
+            border-color: var(--primary);
+            background: rgba(6, 182, 212, 0.05);
+        }
+        .option input {
+            display: none;
+        }
+        .option.selected {
+            background: var(--gradient-main);
+            color: white;
+            border-color: transparent;
+        }
+        .timer-badge {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-pill);
+            background: #ff5f56;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(255, 95, 86, 0.3);
+            z-index: 100;
+        }
+        .timer-badge.idle {
+            background: var(--gradient-main);
+            box-shadow: 0 10px 20px rgba(6, 182, 212, 0.25);
+        }
+
+        /* Auth Overlay */
+        .auth-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .auth-overlay.open {
+            display: flex;
+            pointer-events: auto;
+        }
+        .auth-modal {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 3rem 2.5rem;
+            border-radius: var(--radius-md); /* Standard top rounding */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .auth-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.5rem; /* Soft rounding for inputs */
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .auth-input:focus {
+            border-color: black;
+            border-width: 2px;
+            outline: none;
+        }
+        .btn-u-shape {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius-pill); /* Full U-shape */
+            background: #22d3ee; /* Bright Cyan */
+            color: white;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(34, 211, 238, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: var(--transition);
+        }
+        .btn-u-shape:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(34, 211, 238, 0.5);
+        }
+        @media (max-width: 900px) {
+            .test-container {
+                margin-top: 95px;
+                padding: 1rem;
+            }
+            .mock-hero,
+            .quiz-layout,
+            .mock-points,
+            .test-rules-grid,
+            .result-flow {
+                grid-template-columns: 1fr;
+            }
+            .timer-badge {
+                position: static;
+                width: fit-content;
+                margin: 100px 1rem -80px auto;
+            }
+            .quiz-side {
+                position: static;
+            }
+        }
+        @media (max-width: 600px) {
+            .mock-card-footer,
+            .flex-between {
+                align-items: stretch;
+                flex-direction: column;
+            }
+            .mock-card-footer .btn,
+            .flex-between .btn {
+                width: 100%;
+            }
+            .option {
+                align-items: flex-start;
+            }
+        }
+        html,
+        body {
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto !important;
+        }
+        #test-content,
+        .mock-course-card,
+        .option,
+        #prev-btn,
+        #next-btn {
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="dark-alt">
+    <script>
+        document.documentElement.style.overflowY = 'auto';
+        document.body.style.overflowY = 'auto';
+        document.body.style.pointerEvents = 'auto';
+    </script>
+    <!-- Auth Gate -->
+    <div id="auth-gate" class="auth-overlay">
+        <div class="auth-modal">
+            <h1 id="auth-title" class="text-gradient" style="margin-bottom: 0.5rem; font-size: 2.2rem; font-weight: 800;">Create Account</h1>
+            <p id="auth-desc" style="color: #64748b; margin-bottom: 2.5rem; font-size: 1rem;">Please login or register to continue with the Mock Test.</p>
+
+            <div id="login-form">
+                <input type="text" id="login-mobile" placeholder="Mobile Number" class="auth-input">
+                <input type="password" id="login-pass" placeholder="Password" class="auth-input">
+                <button onclick="handleAuth('login')" class="btn-u-shape">Login Now</button>
+                <p style="font-size: 0.9rem; color: #64748b;">Don't have an account? <button type="button" onclick="toggleAuth(true)" style="color: var(--primary); font-weight: 700; border: 0; background: none; cursor: pointer;">Sign Up</button></p>
+            </div>
+
+            <div id="signup-form-overlay" style="display: none;">
+                <input type="text" id="signup-name" placeholder="Full Name" class="auth-input">
+                <input type="text" id="signup-mobile" placeholder="Mobile Number (10 Digits)" class="auth-input">
+                <input type="password" id="signup-pass" placeholder="Create Password" class="auth-input">
+                <select id="signup-course" class="auth-input" style="height: auto;">
+                    <option value="">Select Course</option>
+                    <option value="JEE">IIT-JEE</option>
+                    <option value="NEET">NEET</option>
+                    <option value="FOUND">Foundation</option>
+                </select>
+                <button onclick="handleAuth('signup')" class="btn-u-shape">Start Free Trial</button>
+                <p style="font-size: 0.9rem; color: #64748b;">Already registered? <button type="button" onclick="toggleAuth(false)" style="color: var(--primary); font-weight: 700; border: 0; background: none; cursor: pointer;">Login</button></p>
+            </div>
+
+            <!-- Payment Block -->
+            <div id="payment-gate" style="display: none;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⏳</div>
+                <h3 style="color: var(--admin-danger);">Trial Expired!</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 2rem;">Your 3-day access has ended. Complete your registration fee to continue unlimited testing.</p>
+                <a href="payment.html" class="btn btn-primary" style="width: 100%;">Pay Enrollment Fee</a>
+            </div>
+        </div>
+    </div>
+    <header class="navbar scrolled">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="./assets/images/logo.svg" alt="Udaan" class="logo-img">
+            </a>
+            <div class="nav-actions">
+                <a href="index.html" class="btn btn-outline" data-i18n="nav-home">Home</a>
+                <div class="lang-switcher">
+                    <button id="lang-en" class="lang-btn active">EN</button>
+                    <button id="lang-hi" class="lang-btn">हिं</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="timer-badge idle" id="timer-badge">
+        Time: <span id="time">60:00</span>
+    </div>
+
+    <main class="test-container" id="test-content">
+        <!-- Step 1: Course Selection -->
+        <div id="selection-step">
+            <div class="mock-hero">
+                <div class="glass-card mock-hero-copy">
+                    <div class="badge">Udaan Practice Arena</div>
+                    <h1 class="section-title">Weekly <span class="text-gradient">Mock Test</span></h1>
+                    <p>Attempt a timed diagnostic test, build exam temperament, and send your score to the Udaan academic team for review. Use this page for weekly practice before joining a live doubt session.</p>
+                    <div class="mock-points">
+                        <div class="mock-point">
+                            <span>Format</span>
+                            <strong>MCQ based test</strong>
+                        </div>
+                        <div class="mock-point">
+                            <span>Duration</span>
+                            <strong>60 minutes</strong>
+                        </div>
+                        <div class="mock-point">
+                            <span>Review</span>
+                            <strong>Admin approval</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card mock-side-panel">
+                    <h3>Before You Start</h3>
+                    <p>Keep a notebook ready, sit in a quiet place, and complete the test in one attempt for best analysis.</p>
+                    <div class="test-rule">
+                        <span>Marking</span>
+                        <strong>+1 for correct, 0 for skipped or wrong</strong>
+                    </div>
+                    <div class="test-rule">
+                        <span>Result</span>
+                        <strong>Submitted to admin dashboard</strong>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title text-gradient" data-i18n="select-course-title">Select Your Course</h2>
+            <p class="section-subtitle" style="text-align: left; margin: 0 0 1.5rem; max-width: 760px;">Choose the track closest to your preparation. Each test checks concept clarity, speed, and accuracy across important exam areas.</p>
+            <div class="grid-3-col" style="margin-top: 2rem;">
+                <div class="course-card glass-card clickable mock-course-card" onclick="startTest('JEE')">
+                    <div class="course-badge">PCM</div>
+                    <h3 data-i18n="nav-jee">IIT-JEE</h3>
+                    <p>For Class 11, Class 12, and dropper students preparing for engineering entrance exams.</p>
+                    <ul>
+                        <li>Physics: mechanics, electricity, modern physics</li>
+                        <li>Chemistry: physical, organic, inorganic basics</li>
+                        <li>Maths: algebra, calculus, coordinate geometry</li>
+                    </ul>
+                    <div class="mock-card-footer">
+                        <small>Best for: JEE Main practice</small>
+                        <span class="btn btn-sm btn-primary">Start Test</span>
+                    </div>
+                </div>
+                <div class="course-card glass-card clickable mock-course-card" onclick="startTest('NEET')">
+                    <div class="course-badge">PCB</div>
+                    <h3 data-i18n="nav-neet">NEET</h3>
+                    <p>For medical aspirants who want NCERT-focused practice with speed and retention checks.</p>
+                    <ul>
+                        <li>Biology: genetics, physiology, plant systems</li>
+                        <li>Physics: units, motion, thermodynamics</li>
+                        <li>Chemistry: reactions, pH, bonding, periodicity</li>
+                    </ul>
+                    <div class="mock-card-footer">
+                        <small>Best for: NEET concept audit</small>
+                        <span class="btn btn-sm btn-primary">Start Test</span>
+                    </div>
+                </div>
+                <div class="course-card glass-card clickable mock-course-card" onclick="startTest('FOUND')">
+                    <div class="course-badge">6-10</div>
+                    <h3 data-i18n="nav-found">Foundation</h3>
+                    <p>For school students building strong maths, science, and reasoning fundamentals.</p>
+                    <ul>
+                        <li>Maths: numbers, geometry, formulas, logic</li>
+                        <li>Science: light, matter, plants, environment</li>
+                        <li>Reasoning: accuracy, observation, application</li>
+                    </ul>
+                    <div class="mock-card-footer">
+                        <small>Best for: Class 6-10 basics</small>
+                        <span class="btn btn-sm btn-primary">Start Test</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-rules-grid">
+                <div class="test-rule">
+                    <span>Rule 01</span>
+                    <strong>Do not refresh during the test.</strong>
+                    <p>Your selected answers are tracked inside the current attempt.</p>
+                </div>
+                <div class="test-rule">
+                    <span>Rule 02</span>
+                    <strong>Attempt all known questions first.</strong>
+                    <p>Use Previous and Save & Next to move through the test calmly.</p>
+                </div>
+                <div class="test-rule">
+                    <span>Rule 03</span>
+                    <strong>Check result status later.</strong>
+                    <p>Solutions become visible after admin approval from the dashboard.</p>
+                </div>
+            </div>
+
+            <div class="result-flow">
+                <div class="result-step">
+                    <span>Step 1</span>
+                    <strong>Select track</strong>
+                    <p>Pick JEE, NEET, or Foundation based on your target.</p>
+                </div>
+                <div class="result-step">
+                    <span>Step 2</span>
+                    <strong>Submit test</strong>
+                    <p>Your score, student ID, and course are saved for review.</p>
+                </div>
+                <div class="result-step">
+                    <span>Step 3</span>
+                    <strong>Get feedback</strong>
+                    <p>Use the approved result to plan revision and doubt clearing.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Question Display -->
+        <div id="quiz-step" style="display: none;">
+            <div class="badge" id="course-label">JEE Preparation</div>
+            <h1 class="section-title"><span data-i18n="mock-test-title-prefix">Weekly </span><span class="text-gradient" data-i18n="mock-test-title-span">Mock Test</span></h1>
+
+            <div class="quiz-layout">
+                <div>
+                    <div class="glass-card question-card fade-up-anim visible">
+                        <p style="font-size: 0.9rem; color: var(--primary); font-weight: 600;" id="q-number">Question 1 of 5</p>
+                        <h3 style="margin-top: 0.5rem;" id="q-text" data-i18n="q1-text">Loading...</h3>
+                        <div class="options">
+                            <label class="option" onclick="selectOption(0)">
+                                <span>A</span>
+                                <span id="opt-a">...</span>
+                            </label>
+                            <label class="option" onclick="selectOption(1)">
+                                <span>B</span>
+                                <span id="opt-b">...</span>
+                            </label>
+                            <label class="option" onclick="selectOption(2)">
+                                <span>C</span>
+                                <span id="opt-c">...</span>
+                            </label>
+                            <label class="option" onclick="selectOption(3)">
+                                <span>D</span>
+                                <span id="opt-d">...</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex-between">
+                        <button class="btn btn-outline" id="prev-btn" onclick="prevQuestion()" data-i18n="btn-prev">Previous</button>
+                        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" data-i18n="btn-next">Save & Next</button>
+                    </div>
+                </div>
+
+                <aside class="glass-card quiz-side">
+                    <h3>Attempt Summary</h3>
+                    <p>Keep moving. You can return to earlier questions before final submission.</p>
+                    <div class="quiz-side-list">
+                        <div><span>Course</span><strong id="summary-course">-</strong></div>
+                        <div><span>Total Questions</span><strong id="summary-total">-</strong></div>
+                        <div><span>Answered</span><strong id="summary-answered">0</strong></div>
+                        <div><span>Remaining</span><strong id="summary-remaining">-</strong></div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <!-- Step 3: Success -->
+        <div id="success-step" style="display: none; text-align: center;">
+            <div class="glass-card" style="padding: 3rem;">
+                <div style="font-size: 4rem;">🎉</div>
+                <h2 class="text-gradient">Test Submitted Successfully!</h2>
+                <p>Your results have been sent to the admin for review.</p>
+                <div id="solution-box" style="margin-top: 1.5rem; display: none;">
+                    <p style="color: var(--primary); font-weight: 600;">Solution Released!</p>
+                    <a id="pdf-link" href="javascript:void(0)" target="_blank" class="btn btn-outline" style="margin-top: 0.5rem;">📥 Download Solution PDF</a>
+                </div>
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+                    <a href="index.html" class="btn btn-primary">Go to Home</a>
+                    <button onclick="checkStatus()" class="btn btn-outline">Check Result Status</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./assets/js/translations.js"></script>
+    <script src="./assets/js/questions.js"></script>
+    <script src="./assets/js/script.js"></script>
+    <script>
+        let currentCourse = '';
+        let currentIdx = 0;
+        let score = 0;
+        let userAnswers = [];
+        let submissionId = null;
+        let time = 60 * 60;
+        let testSubmitted = false;
+
+        // Auth Gate Logic
+        function checkAuth() {
+            const user = JSON.parse(localStorage.getItem('udaan-user-session') || 'null');
+            if (user) {
+                localStorage.setItem('udaan-student-name', user.name || 'Student');
+            }
+            hideAuthGate();
+        }
+
+        function toggleAuth(showSignup) {
+            document.getElementById('login-form').style.display = showSignup ? 'none' : 'block';
+            document.getElementById('signup-form-overlay').style.display = showSignup ? 'block' : 'none';
+            document.getElementById('payment-gate').style.display = 'none';
+            document.getElementById('auth-title').innerText = showSignup ? 'Create Account' : 'Welcome Back';
+        }
+
+        function handleAuth(type) {
+            if (type === 'login') {
+                const mobile = document.getElementById('login-mobile').value.trim();
+                const pass = document.getElementById('login-pass').value;
+                const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+                const found = users.find(u => (u.mobile === mobile || u.email === mobile || u.id === mobile) && u.pass === pass && (u.role || 'student') === 'student');
+
+                if (found) {
+                    localStorage.setItem('udaan-user-session', JSON.stringify(found));
+                    localStorage.setItem('udaan-student-name', found.name);
+                    hideAuthGate();
+                } else {
+                    alert("Invalid Mobile or Password.");
+                }
+            } else {
+                const name = document.getElementById('signup-name').value.trim();
+                const mobile = document.getElementById('signup-mobile').value.trim();
+                const pass = document.getElementById('signup-pass').value;
+                const course = document.getElementById('signup-course').value;
+
+                if (name && mobile.length === 10 && pass && course) {
+                    const studentId = "UDN-" + Math.floor(100 + Math.random() * 900) + "-" + Math.floor(100 + Math.random() * 900) + "-" + Math.floor(10 + Math.random() * 90);
+                    const newUser = {
+                        name, mobile, pass, course,
+                        role: 'student',
+                        id: studentId,
+                        batch: 'Online',
+                        joinedAt: Date.now(),
+                        paid: false,
+                        feeStatus: 'pending',
+                        paymentHistory: []
+                    };
+                    const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+                    users.push(newUser);
+                    localStorage.setItem('udaan-users-db', JSON.stringify(users));
+                    localStorage.setItem('udaan-user-session', JSON.stringify(newUser));
+                    localStorage.setItem('udaan-student-name', name);
+                    hideAuthGate();
+                } else {
+                    alert("Please enter a valid 10-digit mobile and all details.");
+                }
+            }
+        }
+
+        // Run check on load
+        window.addEventListener('DOMContentLoaded', checkAuth);
+
+        function checkStatus() {
+            const results = JSON.parse(localStorage.getItem('udaan-results') || '[]');
+            const myResult = results.find(r => r.id === submissionId);
+
+            if (myResult && myResult.approved) {
+                document.getElementById('solution-box').style.display = 'block';
+                if (myResult.solutionPdf) {
+                    document.getElementById('pdf-link').href = myResult.solutionPdf;
+                }
+                alert("Great news! Your result has been approved. You can now download the solution.");
+            } else {
+                alert("Your result is still pending approval from the Admin. Please check back later.");
+            }
+        }
+
+        function hideAuthGate() {
+            const gate = document.getElementById('auth-gate');
+            if (!gate) return;
+            gate.classList.remove('open');
+            gate.style.display = 'none';
+            gate.style.pointerEvents = 'none';
+            document.documentElement.style.overflowY = 'auto';
+            document.body.style.overflowY = 'auto';
+            document.body.style.pointerEvents = 'auto';
+        }
+
+        function startTest(course) {
+            hideAuthGate();
+            currentCourse = course;
+            currentIdx = 0;
+            userAnswers = [];
+            time = 60 * 60;
+            testSubmitted = false;
+            document.getElementById('selection-step').style.display = 'none';
+            document.getElementById('quiz-step').style.display = 'block';
+            document.getElementById('success-step').style.display = 'none';
+            document.getElementById('course-label').innerText = course + ' Mock Test';
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            const timerBadge = document.getElementById('timer-badge');
+            if (timerBadge) timerBadge.classList.remove('idle');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const lang = localStorage.getItem('udaan-lang') || 'en';
+            const qSet = window.questionsBank[currentCourse];
+            const qObj = qSet[currentIdx];
+            const q = qObj[lang];
+
+            document.getElementById('q-number').innerText = `Question ${currentIdx + 1} of ${qSet.length}`;
+
+            const qEl = document.getElementById('q-text');
+            qEl.innerText = q.text;
+            qEl.removeAttribute('data-i18n'); // Using direct text injection for dynamic pool
+
+            document.getElementById('opt-a').innerText = q.oa;
+            document.getElementById('opt-b').innerText = q.ob;
+            document.getElementById('opt-c').innerText = q.oc;
+            document.getElementById('opt-d').innerText = q.od;
+
+            document.getElementById('opt-a').removeAttribute('data-i18n');
+            document.getElementById('opt-b').removeAttribute('data-i18n');
+            document.getElementById('opt-c').removeAttribute('data-i18n');
+            document.getElementById('opt-d').removeAttribute('data-i18n');
+
+            // Highlight saved answer
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', userAnswers[currentIdx] === i);
+            });
+
+            updateAttemptSummary();
+        }
+
+        function updateAttemptSummary() {
+            const qSet = window.questionsBank[currentCourse] || [];
+            const answered = userAnswers.filter(answer => answer !== undefined).length;
+            const total = qSet.length;
+            const courseNames = { JEE: 'IIT-JEE', NEET: 'NEET', FOUND: 'Foundation' };
+
+            const summaryCourse = document.getElementById('summary-course');
+            const summaryTotal = document.getElementById('summary-total');
+            const summaryAnswered = document.getElementById('summary-answered');
+            const summaryRemaining = document.getElementById('summary-remaining');
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+
+            if (summaryCourse) summaryCourse.innerText = courseNames[currentCourse] || currentCourse;
+            if (summaryTotal) summaryTotal.innerText = total;
+            if (summaryAnswered) summaryAnswered.innerText = answered;
+            if (summaryRemaining) summaryRemaining.innerText = Math.max(0, total - answered);
+            if (nextBtn) nextBtn.innerText = currentIdx === total - 1 ? 'Submit Test' : 'Save & Next';
+            if (prevBtn) prevBtn.disabled = currentIdx === 0;
+        }
+
+        // Add event listener for language change to refresh current question
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'udaan-lang') loadQuestion();
+        });
+
+        // Override global setLanguage to refresh questions
+        const originalSetLang = window.setLanguage;
+        window.setLanguage = function(lang) {
+            if(originalSetLang) originalSetLang(lang);
+            if(currentCourse) loadQuestion();
+        };
+
+        function selectOption(idx) {
+            userAnswers[currentIdx] = idx;
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === idx);
+            });
+            updateAttemptSummary();
+        }
+
+        function nextQuestion() {
+            const qSet = window.questionsBank[currentCourse];
+            if (currentIdx < qSet.length - 1) {
+                currentIdx++;
+                loadQuestion();
+            } else {
+                submitTest();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                loadQuestion();
+            }
+        }
+
+        function submitTest() {
+            if (testSubmitted) return;
+            testSubmitted = true;
+            const qSet = window.questionsBank[currentCourse];
+            let finalScore = 0;
+            qSet.forEach((q, i) => {
+                if(userAnswers[i] === q.correct) finalScore++;
+            });
+
+            submissionId = 'SUB-' + Date.now();
+            const user = JSON.parse(localStorage.getItem('udaan-user-session') || 'null');
+
+            // Save for Admin
+            const results = JSON.parse(localStorage.getItem('udaan-results') || '[]');
+            results.push({
+                id: submissionId,
+                course: currentCourse,
+                score: finalScore,
+                total: qSet.length,
+                date: new Date().toLocaleString(),
+                student: user?.name || localStorage.getItem('udaan-student-name') || 'Guest Student',
+                studentId: user?.id || 'Not assigned',
+                contact: user?.mobile || user?.email || '',
+                approved: false,
+                solutionPdf: ''
+            });
+            localStorage.setItem('udaan-results', JSON.stringify(results));
+
+            document.getElementById('quiz-step').style.display = 'none';
+            document.getElementById('success-step').style.display = 'block';
+            const timerBadge = document.getElementById('timer-badge');
+            if (timerBadge) timerBadge.classList.add('idle');
+        }
+
+        // Simple timer logic
+        const display = document.getElementById('time');
+        setInterval(() => {
+            let mins = Math.floor(time / 60);
+            let secs = time % 60;
+            display.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            if (currentCourse && document.getElementById('quiz-step').style.display !== 'none' && time > 0) {
+                time--;
+            }
+            if (currentCourse && time === 0 && document.getElementById('quiz-step').style.display !== 'none') {
+                submitTest();
+            }
+        }, 1000);
+
+        hideAuthGate();
+    </script>
+</body>
+</html>

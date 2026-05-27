@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Udaan Master Admin | Control Everything</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --admin-sidebar-width: 260px;
+            --admin-primary: #4F46E5;
+            --admin-success: #10B981;
+            --admin-danger: #EF4444;
+            --admin-warning: #F59E0B;
+            --admin-bg: #F8FAFC;
+        }
+
+        body {
+            background-color: var(--admin-bg);
+            display: flex;
+            min-height: 100vh;
+            color: #1E293B;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: var(--admin-sidebar-width);
+            background: #0F172A;
+            color: white;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            color: #94A3B8;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .admin-nav-item.active {
+            background: var(--admin-primary);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+        }
+
+        .admin-nav-item:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        /* Main Wrapper */
+        .admin-wrapper {
+            margin-left: var(--admin-sidebar-width);
+            flex: 1;
+            padding: 2.5rem;
+        }
+
+        .app-view {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .app-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats & UI Blocks */
+        .admin-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #F1F5F9;
+            margin-bottom: 2rem;
+        }
+
+        .grid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.8rem;
+        }
+
+        .admin-table th {
+            padding: 1rem;
+            text-align: left;
+            color: #64748B;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .admin-table td {
+            background: white;
+            padding: 1.2rem 1rem;
+            border-top: 1px solid #F1F5F9;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .admin-table td:first-child { border-left: 1px solid #F1F5F9; border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+        .admin-table td:last-child { border-right: 1px solid #F1F5F9; border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+
+        .btn-pill {
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .btn-pill-primary { background: var(--admin-primary); color: white; }
+        .btn-pill-outline { background: #f1f5f9; color: #1e293b; }
+
+        /* Status Pills */
+        .badge-pill {
+            padding: 0.2rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .badge-success { background: #DCFCE7; color: #166534; }
+        .badge-warning { background: #FEF9C3; color: #854D0E; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .activity-list {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 900px) {
+            .admin-sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+            body {
+                display: block;
+            }
+            .admin-wrapper {
+                margin-left: 0;
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Persistent Sidebar -->
+    <aside class="admin-sidebar">
+        <div style="margin-bottom: 3rem;">
+            <a href="index.html">
+                <img src="./assets/images/logo.svg" alt="Admin Logo" width="180">
+            </a>
+            <p style="font-size: 0.7rem; color: #64748B; margin-top: 0.5rem; font-weight: 700;">COMMAND CENTER V1.5</p>
+        </div>
+
+        <div onclick="switchView('dashboard')" class="admin-nav-item active" id="nav-dashboard">📊 Dashboard Overview</div>
+        <div onclick="switchView('results')" class="admin-nav-item" id="nav-results">📝 Mock Test Results</div>
+        <div onclick="switchView('students')" class="admin-nav-item" id="nav-students">👥 Student Registry</div>
+        <div onclick="switchView('faculty')" class="admin-nav-item" id="nav-faculty">👨‍🏫 Faculty Management</div>
+        <div onclick="switchView('courses')" class="admin-nav-item" id="nav-courses">📚 Course Catalog</div>
+        <div onclick="switchView('payments')" class="admin-nav-item" id="nav-payments">💰 Fee & Payments</div>
+
+        <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <a href="index.html" class="admin-nav-item">🏠 Return to Website</a>
+            <a href="javascript:void(0)" onclick="logoutAdmin()" class="admin-nav-item" style="color: #fca5a5;">🚪 Secure Logout</a>
+        </div>
+    </aside>
+
+    <div class="admin-wrapper">
+        <!-- Dashboard View -->
+        <div id="view-dashboard" class="app-view active">
+            <div class="grid-header">
+                <div>
+                    <h1 style="font-size: 2rem; font-weight: 800;">Master Dashboard</h1>
+                    <p style="color: #64748B;">Overview of your entire institute operations.</p>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-bottom: 2rem;">
+                <div class="admin-card">
+                    <h4 style="color: #64748B; font-size: 0.9rem;">Total Registrations</h4>
+                    <div style="font-size: 2.2rem; font-weight: 800;" id="dash-students">0</div>
+                </div>
+                <div class="admin-card">
+                    <h4 style="color: #64748B; font-size: 0.9rem;">Total Tests Taken</h4>
+                    <div style="font-size: 2.2rem; font-weight: 800;" id="dash-tests">0</div>
+                </div>
+                <div class="admin-card">
+                    <h4 style="color: #64748B; font-size: 0.9rem;">Total Revenue (Sim)</h4>
+                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--admin-success);" id="dash-revenue">₹0</div>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <h3 style="margin-bottom: 1.5rem; font-weight: 800;">Quick Actions</h3>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-primary" onclick="switchView('results')">Approve Latest Results</button>
+                    <button class="btn btn-outline" onclick="switchView('courses')">View Active Courses</button>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <h3 style="margin-bottom: 1rem; font-weight: 800;">Recent Student Activity</h3>
+                <div class="activity-list" id="recent-activity">
+                    <div class="activity-item"><span>No activity yet.</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results View -->
+        <div id="view-results" class="app-view">
+            <div class="grid-header">
+                <h1 style="font-size: 2rem; font-weight: 800;">Test Results & Solutions</h1>
+                <button class="btn btn-primary" onclick="exportData()">Export Reports</button>
+            </div>
+            <div class="admin-card" style="padding: 0; overflow: hidden;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Student ID</th>
+                            <th>Course</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="res-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Students View -->
+        <div id="view-students" class="app-view">
+            <div class="grid-header">
+                <h1 style="font-size: 2rem; font-weight: 800;">Student Registry</h1>
+            </div>
+            <div class="admin-card" style="padding: 0; overflow: hidden;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Student ID</th>
+                            <th>Course / Batch</th>
+                            <th>Fee Status</th>
+                            <th>Trial Status</th>
+                            <th>Registration</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stud-tbody">
+                        <tr><td colspan="6" style="text-align:center; padding: 3rem;">Loading Registry...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Courses View (Catalog) -->
+        <div id="view-courses" class="app-view">
+            <div class="grid-header">
+                <h1 style="font-size: 2rem; font-weight: 800;">Course Catalog</h1>
+                <button class="btn btn-primary">+ Add New Course</button>
+            </div>
+            <div class="stats-grid">
+                <div class="admin-card">
+                    <h3 class="text-gradient">IIT-JEE ELITE</h3>
+                    <p>6 Active Batches | 150+ Students</p>
+                </div>
+                <div class="admin-card">
+                    <h3 class="text-gradient">NEET BOOSTER</h3>
+                    <p>4 Active Batches | 120+ Students</p>
+                </div>
+                <div class="admin-card">
+                    <h3 class="text-gradient">FOUNDATION</h3>
+                    <p>10 Active Batches | 300+ Students</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Faculty View -->
+        <div id="view-faculty" class="app-view">
+            <div class="grid-header">
+                <h1 style="font-size: 2rem; font-weight: 800;">Faculty Management</h1>
+                <button class="btn btn-primary" onclick="alert('Demo: connect this with backend faculty creation later.')">+ Add Faculty</button>
+            </div>
+            <div class="admin-card" style="padding: 0; overflow: hidden;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Faculty</th>
+                            <th>Subject</th>
+                            <th>Assigned Batches</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody id="faculty-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Payments View -->
+        <div id="view-payments" class="app-view">
+            <div class="grid-header">
+                <h1 style="font-size: 2rem; font-weight: 800;">Fee Management</h1>
+            </div>
+            <div class="admin-card" style="text-align: center; padding: 5rem;">
+                <h2 style="opacity: 0.3;">Payment Integration Sandbox Active</h2>
+                <p>Track student fees, overdue payments, and receipts here.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function guardAdminAccess() {
+            const session = JSON.parse(localStorage.getItem('udaan-user-session') || 'null');
+            if (!session || session.role !== 'admin') {
+                window.location.href = 'login.html';
+            }
+        })();
+
+        function switchView(viewId) {
+            // Update UI
+            document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + viewId).classList.add('active');
+
+            // Update Sidebar
+            document.querySelectorAll('.admin-nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('nav-' + viewId).classList.add('active');
+
+            // Load Data
+            if(viewId === 'results') loadResults();
+            if(viewId === 'students') loadStudents();
+            if(viewId === 'faculty') loadFaculty();
+            if(viewId === 'dashboard') loadStats();
+        }
+
+        function loadStats() {
+            const results = JSON.parse(localStorage.getItem('udaan-results') || '[]');
+            const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+            const students = users.filter(u => (u.role || 'student') === 'student');
+            const revenue = students.reduce((sum, student) => {
+                const history = student.paymentHistory || [];
+                return sum + history.reduce((inner, item) => inner + Number(item.amount || 0), 0);
+            }, 0);
+            document.getElementById('dash-tests').innerText = results.length;
+            document.getElementById('dash-students').innerText = students.length;
+            document.getElementById('dash-revenue').innerText = '₹' + revenue.toLocaleString('en-IN');
+            renderRecentActivity(students, results);
+        }
+
+        function loadResults() {
+            const results = JSON.parse(localStorage.getItem('udaan-results') || '[]');
+            const tbody = document.getElementById('res-tbody');
+            tbody.innerHTML = '';
+
+            if (results.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 3rem;">No mock test submissions yet.</td></tr>`;
+                return;
+            }
+
+            [...results].reverse().forEach((res, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${res.student}</b><br><small>${res.contact || 'No contact saved'}</small></td>
+                    <td>${res.studentId || 'Not assigned'}<br><small>${res.id}</small></td>
+                    <td>${res.course}</td>
+                    <td>${res.score}/${res.total}</td>
+                    <td><small>${res.date || '-'}</small></td>
+                    <td><span class="badge-pill ${res.approved ? 'badge-success' : 'badge-warning'}">${res.approved ? 'RELEASED' : 'PENDING'}</span></td>
+                    <td>
+                        <button onclick="approveTest('${res.id}')" class="btn-pill ${res.approved ? 'btn-pill-outline' : 'btn-pill-primary'}">${res.approved ? 'Revoke' : 'Approve'}</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function loadStudents() {
+            const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+            const students = users.filter(u => (u.role || 'student') === 'student');
+            const tbody = document.getElementById('stud-tbody');
+            tbody.innerHTML = '';
+
+            if (students.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 3rem;">No registered students yet.</td></tr>`;
+                return;
+            }
+
+            [...students].reverse().forEach((u, i) => {
+                const now = Date.now();
+                const trialDuration = 3 * 24 * 60 * 60 * 1000;
+                const timeLeft = trialDuration - (now - u.joinedAt);
+                const daysLeft = Math.max(0, Math.ceil(timeLeft / (1000 * 60 * 60 * 24)));
+
+                let statusBadge = "";
+                if (u.paid) {
+                    statusBadge = '<span class="badge-pill badge-success">PAID / LIFETIME</span>';
+                } else if (timeLeft > 0) {
+                    statusBadge = `<span class="badge-pill badge-warning">TRIAL: ${daysLeft} DAYS LEFT</span>`;
+                } else {
+                    statusBadge = '<span class="badge-pill" style="background:#fee2e2; color:#991b1b;">TRIAL EXPIRED</span>';
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${u.name}</b><br><small>${u.mobile || u.email || 'No contact'}</small></td>
+                    <td>${u.id || 'Not assigned'}</td>
+                    <td>${u.course || '-'}<br><small>${u.batch || 'No batch selected'}</small></td>
+                    <td><span class="badge-pill ${u.paid ? 'badge-success' : 'badge-warning'}">${u.paid ? 'PAID' : 'PENDING'}</span></td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button onclick="markAsPaid('${u.id || u.mobile || u.email}')" class="btn-pill btn-pill-primary" style="padding: 0.3rem 0.8rem;">
+                            ${u.paid ? 'Revoke Paid' : 'Mark as Paid'}
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function loadFaculty() {
+            const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+            const faculty = users.filter(u => u.role === 'faculty');
+            const tbody = document.getElementById('faculty-tbody');
+            tbody.innerHTML = '';
+
+            if (faculty.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 3rem;">No faculty accounts found. Login page creates demo faculty automatically.</td></tr>`;
+                return;
+            }
+
+            faculty.forEach(f => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${f.name}</b><br><small>${f.email || f.mobile}</small></td>
+                    <td>${f.subject || 'General'}</td>
+                    <td>${(f.batches || ['Not assigned']).join(', ')}</td>
+                    <td>Batch planning, attendance, test review and doubt support</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function markAsPaid(identifier) {
+            let users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+            const idx = users.findIndex(u => u.mobile === identifier || u.email === identifier || u.id === identifier);
+            if (idx !== -1) {
+                users[idx].paid = !users[idx].paid;
+                users[idx].feeStatus = users[idx].paid ? 'paid' : 'pending';
+                localStorage.setItem('udaan-users-db', JSON.stringify(users));
+
+                // Update active session if it's the same user
+                const session = JSON.parse(localStorage.getItem('udaan-user-session') || 'null');
+                if (session && (session.mobile === identifier || session.email === identifier || session.id === identifier)) {
+                    session.paid = users[idx].paid;
+                    session.feeStatus = users[idx].feeStatus;
+                    localStorage.setItem('udaan-user-session', JSON.stringify(session));
+                }
+
+                loadStudents();
+                loadStats();
+            }
+        }
+
+        function approveTest(id) {
+            let res = JSON.parse(localStorage.getItem('udaan-results') || '[]');
+            const idx = res.findIndex(r => r.id === id);
+            if(idx !== -1) {
+                res[idx].approved = !res[idx].approved;
+                localStorage.setItem('udaan-results', JSON.stringify(res));
+                loadResults();
+                loadStats();
+            }
+        }
+
+        function renderRecentActivity(students, results) {
+            const activity = [
+                ...students.map(student => ({
+                    type: 'Signup',
+                    title: student.name,
+                    meta: `${student.id || 'No ID'} · ${student.course || 'No course'} · ${new Date(student.joinedAt || Date.now()).toLocaleString()}`,
+                    time: student.joinedAt || 0
+                })),
+                ...results.map(result => ({
+                    type: 'Mock Test',
+                    title: result.student,
+                    meta: `${result.studentId || 'No ID'} · ${result.course} · ${result.score}/${result.total}`,
+                    time: Number(String(result.id || '').replace('SUB-', '')) || 0
+                }))
+            ].sort((a, b) => b.time - a.time).slice(0, 6);
+
+            const box = document.getElementById('recent-activity');
+            if (!box) return;
+            if (!activity.length) {
+                box.innerHTML = `<div class="activity-item"><span>No activity yet.</span></div>`;
+                return;
+            }
+
+            box.innerHTML = activity.map(item => `
+                <div class="activity-item">
+                    <div><b>${item.type}: ${item.title}</b><br><small>${item.meta}</small></div>
+                    <span class="badge-pill ${item.type === 'Signup' ? 'badge-success' : 'badge-warning'}">${item.type}</span>
+                </div>
+            `).join('');
+        }
+
+        function exportData() {
+            const results = JSON.parse(localStorage.getItem('udaan-results') || '[]');
+            const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+            alert(`Demo export ready: ${users.length} users and ${results.length} test result(s).`);
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('udaan-admin-session');
+            localStorage.removeItem('udaan-user-session');
+            window.location.href = 'login.html';
+        }
+
+        // Initialize Stats
+        loadStats();
+    </script>
+</body>
+</html>

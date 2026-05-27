@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Udaan Coaching Institute for admissions, course guidance, fee support, campus location, and student assistance.">
+    <meta name="theme-color" content="#06b6d4">
+    <title>Contact Us | Udaan Coaching</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" class="logo-img">
+            </a>
+
+            <nav class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link" data-i18n="nav-about">About Us</a></li>
+                    <li><a href="courses.html" class="nav-link" data-i18n="nav-courses">Courses</a></li>
+                    <li><a href="index.html#features" class="nav-link" data-i18n="nav-features">Features</a></li>
+                    <li><a href="payment.html" class="nav-link" style="color: #FF671F; font-weight: 700;" data-i18n="nav-pay">Pay Fee</a></li>
+                    <li><a href="contact.html" class="nav-link active" data-i18n="nav-contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <div class="lang-switcher">
+                    <button id="lang-en" class="lang-btn active">EN</button>
+                    <button id="lang-hi" class="lang-btn">हिं</button>
+                </div>
+                <a href="login.html" class="btn btn-outline" data-i18n="btn-login">Log In</a>
+                <a href="signup.html" class="btn btn-primary" data-i18n="btn-signup">Sign Up Free</a>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding-top: 100px;">
+        <!-- Contact Hero -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header text-center fade-up-anim">
+                    <h1 class="section-title" data-i18n="contact-title">Get in Touch</h1>
+                    <p class="section-subtitle" data-i18n="contact-subtitle">Have questions? We're here to help you on your educational journey.</p>
+                </div>
+
+                <div class="grid-2-col" style="gap: 3rem; align-items: start;">
+                    <!-- Contact Form -->
+                    <div class="contact-form-container fade-up-anim">
+                        <div class="glass-card" style="padding: 2.5rem;">
+                            <h3 style="margin-bottom: 1.5rem;" data-i18n="contact-form-title">Send us a Message</h3>
+                            <form id="contact-form" class="auth-form">
+                                <div class="form-group">
+                                    <label class="form-label" data-i18n="contact-name">Full Name</label>
+                                    <input type="text" id="contact-name" class="form-input" placeholder="Your Name" data-i18n-placeholder="contact-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-i18n="contact-email">Email Address</label>
+                                    <input type="email" id="contact-email" class="form-input" placeholder="Your Email" data-i18n-placeholder="contact-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-i18n="contact-subject">Subject</label>
+                                    <input type="text" id="contact-subject" class="form-input" placeholder="Regarding..." data-i18n-placeholder="contact-subject" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-i18n="contact-message">Message</label>
+                                    <textarea id="contact-message" class="form-input" rows="5" placeholder="Write your message here..." data-i18n-placeholder="contact-message" style="resize: none; padding-top: 10px;" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg shadow-pulse" style="width: 100%; margin-top: 1rem;" data-i18n="contact-send">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Contact Info & Map -->
+                    <div class="contact-info-container fade-up-anim delay-1">
+                        <div class="grid-2-col" style="grid-template-columns: 1fr; gap: 2rem;">
+                            <!-- Info Cards -->
+                            <div class="glass-card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.2rem;">
+                                <div class="feature-icon" style="margin: 0; width: 50px; height: 50px; font-size: 1.4rem;">📍</div>
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1.1rem;" data-i18n="contact-campus">Our Campus</h4>
+                                    <p style="margin: 0; font-size: 0.9rem;">Village Majri Bhanda Post Rajwara, Tehsil Mundawar, Khairthal Tijara, Raj. 301427</p>
+                                </div>
+                            </div>
+
+                            <div class="glass-card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.2rem;">
+                                <div class="feature-icon" style="margin: 0; width: 50px; height: 50px; font-size: 1.4rem;">📞</div>
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1.1rem;" data-i18n="contact-phone">Phone Number</h4>
+                                    <p style="margin: 0; font-size: 0.9rem; font-weight: 700;">+91 99502 32074</p>
+                                </div>
+                            </div>
+
+                            <div class="glass-card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.2rem;">
+                                <div class="feature-icon" style="margin: 0; width: 50px; height: 50px; font-size: 1.4rem;">✉️</div>
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1.1rem;" data-i18n="contact-email-title">Email Support</h4>
+                                    <p style="margin: 0; font-size: 0.9rem;">info@udaancoaching.com</p>
+                                </div>
+                            </div>
+
+                            <!-- Map Embed -->
+                            <div class="glass-card" style="overflow: hidden; padding: 0.5rem; border-radius: var(--radius-lg);">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3527.764353896587!2d76.5414166!3d27.8631111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3972691684949503%3A0xe73373be82549503!2sUdaan%20Coaching%20Institute!5e0!3m2!1sen!2sin!4v1710100000000!5m2!1sen!2sin"
+                                    width="100%"
+                                    height="300"
+                                    style="border:0; border-radius: 10px;"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                                <div style="padding: 1rem; text-align: center;">
+                                    <a href="https://maps.app.goo.gl/73Djkkk8fm7BYRr28" target="_blank" class="btn btn-outline btn-sm" data-i18n="footer-maps">Open in Maps App</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section dark-alt" id="faq" style="padding-top: 1rem;">
+            <div class="container">
+                <div class="section-header text-center fade-up-anim">
+                    <h2 class="section-title" data-i18n="faq-title">Frequently Asked Questions</h2>
+                    <p class="section-subtitle" data-i18n="faq-subtitle">Quick answers for students and parents before admission.</p>
+                </div>
+                <div class="grid-3-col">
+                    <div class="glass-card">
+                        <h3 data-i18n="faq-batch-q">How do I join a batch?</h3>
+                        <p data-i18n="faq-batch-a">Use the Sign Up page, select your course and batch, then contact our admission team for confirmation.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 data-i18n="faq-mock-q">Can I take a mock test first?</h3>
+                        <p data-i18n="faq-mock-a">Yes. The mock test page is open for practice and saves your result for review.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 data-i18n="faq-pay-q">How do fee payments work?</h3>
+                        <p data-i18n="faq-pay-a">Pay only through the official UPI ID shown on the payment page and submit the transaction ID for admin verification.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" class="logo-img">
+                    </a>
+                    <p data-i18n="footer-desc">Empowering the next generation of leaders and professionals through accessible, premium education.</p>
+                    <div class="social-links">
+                        <a href="https://wa.me/919680141133" target="_blank" class="social-icon whatsapp" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://instagram.com/rgajraj1" target="_blank" class="social-icon instagram" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/" target="_blank" class="social-icon youtube" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4 data-i18n="footer-links-title">Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home" data-i18n="nav-home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="nav-about">About Us</a></li>
+                        <li><a href="courses.html" data-i18n="nav-courses">Courses</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4 data-i18n="footer-support-title">Support</h4>
+                    <ul>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h4 data-i18n="footer-contact-title">Social Focus</h4>
+                    <p>📍 Village Majri Bhanda, Rajwara, Mundawar, Khairthal Tijara, Raj. 301427</p>
+                    <p>📞 +91 99502 32074</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer-rights">&copy; 2026 Udaan Coaching. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contact-form')?.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const subject = document.getElementById('contact-subject').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+            const text = `Hello Udaan Coaching, I want to enquire.%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0ASubject: ${encodeURIComponent(subject)}%0AMessage: ${encodeURIComponent(message)}`;
+            window.open(`https://wa.me/919680141133?text=${text}`, '_blank', 'noopener');
+        });
+    </script>
+    <script src="./assets/js/translations.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>

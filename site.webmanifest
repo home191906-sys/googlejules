@@ -1,0 +1,9 @@
+{
+  "name": "Udaan Coaching Institute",
+  "short_name": "Udaan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#06b6d4",
+  "description": "Coaching, mock tests, study material, and student support for Foundation, IIT-JEE, NEET, Commerce, and CA Foundation."
+}

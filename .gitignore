@@ -1,0 +1,28 @@
+# Local preview output
+.preview-server.err
+.preview-server.log
+.visual-check/
+
+# Dependencies and environments
+node_modules/
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Build and cache output
+dist/
+build/
+.cache/
+.pytest_cache/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
