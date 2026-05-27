@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Student admission signup for Udaan Coaching.">
+    <meta name="theme-color" content="#06b6d4">
+    <title>Student Sign Up | Udaan Coaching</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="navbar scrolled">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" class="logo-img" style="height: 70px;">
+            </a>
+            <div class="nav-actions">
+                <a href="index.html" class="btn btn-outline" data-i18n="nav-home">Home</a>
+                <div class="lang-switcher">
+                    <button id="lang-en" class="lang-btn active">EN</button>
+                    <button id="lang-hi" class="lang-btn">हिं</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-bg"></div>
+        <div class="auth-bg-text">UDAAN</div>
+
+        <div class="glass-card auth-card auth-card-wide fade-up-anim">
+            <div class="auth-header" id="signup-header">
+                <h2 data-i18n="signup-title">Student Admission</h2>
+                <p data-i18n="signup-subtitle">Create a student account, get your ID, and continue to fee payment.</p>
+            </div>
+
+            <div class="admission-steps" aria-label="Signup progress">
+                <span class="active" id="progress-1">1. Details</span>
+                <span id="progress-2">2. Code</span>
+                <span id="progress-3">3. Student ID</span>
+            </div>
+
+            <form id="signup-form" class="auth-form">
+                <div id="step-1" class="step-container active">
+                    <div class="signup-grid">
+                        <div class="form-group">
+                            <label for="fullname" class="form-label" data-i18n="signup-fullname">Full Name</label>
+                            <input type="text" id="fullname" class="form-input" placeholder="Student full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact" class="form-label" data-i18n="signup-contact">Mobile No. / Email ID</label>
+                            <input type="text" id="contact" class="form-input" placeholder="Mobile or email" required>
+                        </div>
+                    </div>
+
+                    <div class="signup-grid">
+                        <div class="form-group">
+                            <label for="course" class="form-label" data-i18n="signup-course">Course</label>
+                            <select id="course" class="form-input" required>
+                                <option value="" disabled selected>Select Course</option>
+                                <option value="FND6">Foundation (Class 6)</option>
+                                <option value="FND7">Foundation (Class 7)</option>
+                                <option value="FND8">Foundation (Class 8)</option>
+                                <option value="FND9">Foundation (Class 9)</option>
+                                <option value="FND10">Foundation (Class 10)</option>
+                                <option value="JEE">Target JEE (11-12)</option>
+                                <option value="NEET">Target NEET (11-12)</option>
+                                <option value="CA_FND">CA Foundation</option>
+                                <option value="COMMERCE">Commerce (11-12)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="batch" class="form-label" data-i18n="signup-batch">Preferred Batch</label>
+                            <select id="batch" class="form-input" required>
+                                <option value="" disabled selected>Select Batch</option>
+                                <option value="Morning A">Morning (A)</option>
+                                <option value="Evening B">Evening (B)</option>
+                                <option value="Online">Online</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="signup-grid">
+                        <div class="form-group">
+                            <label for="password" class="form-label" data-i18n="signup-password">Password</label>
+                            <input type="password" id="password" class="form-input" placeholder="Create a password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="parent-mobile" class="form-label" data-i18n="signup-parent">Parent Mobile</label>
+                            <input type="text" id="parent-mobile" class="form-input" placeholder="Optional parent contact">
+                        </div>
+                    </div>
+
+                    <div class="role-use-panel">
+                        <div class="role-use-head">
+                            <strong data-i18n="signup-includes">Student Account Includes</strong>
+                            <span data-i18n="signup-trial">Trial access starts after signup</span>
+                        </div>
+                        <ul>
+                            <li>Student dashboard and course plan</li>
+                            <li>Mock test access</li>
+                            <li>Approved results and solution PDFs</li>
+                            <li>Fee status and payment receipt tracking</li>
+                        </ul>
+                    </div>
+
+                    <label class="auth-check" style="margin-bottom: 1rem;">
+                        <input type="checkbox" id="terms" required>
+                        <span data-i18n="signup-terms">I agree to the Terms and Conditions.</span>
+                    </label>
+
+                    <button type="button" onclick="goToStep(2)" class="btn btn-primary btn-lg auth-btn shadow-pulse" data-i18n="signup-otp">Get Verification Code</button>
+                </div>
+
+                <div id="step-2" class="step-container">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                        <h3 data-i18n="signup-verify-title">Verify Your Contact</h3>
+                        <p><span data-i18n="signup-verify-desc">Enter the verification code sent to your contact.</span><br><b id="display-contact">your contact</b></p>
+                    </div>
+
+                    <div class="otp-container">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp2')" id="otp1">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp3')" id="otp2">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp4')" id="otp3">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp5')" id="otp4">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp6')" id="otp5">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'verify-btn')" id="otp6">
+                    </div>
+
+                    <button type="submit" id="verify-btn" class="btn btn-primary btn-lg auth-btn shadow-pulse" data-i18n="signup-create">Verify & Create Student ID</button>
+                    <button type="button" onclick="goToStep(1)" class="auth-back-btn">← Back to Details</button>
+                </div>
+            </form>
+
+            <div id="signup-success" class="success-panel">
+                <h3 data-i18n="signup-success">Registration Successful</h3>
+                <p data-i18n="signup-success-desc">Your unique Student ID has been generated. Use it for fee payment and portal access.</p>
+                <div class="generated-id-box"><span id="generated-id">UDN-XXX-XXX-000</span></div>
+                <div class="signup-actions">
+                    <a href="payment.html" class="btn btn-primary" data-i18n="signup-pay">Proceed to Pay Fee</a>
+                    <a href="dashboard.html" class="btn btn-outline" data-i18n="btn-open-dashboard">Open Student Dashboard</a>
+                </div>
+            </div>
+
+            <div class="auth-footer" id="auth-footer">
+                <span data-i18n="signup-footer">Already have an account?</span> <a href="login.html" data-i18n="btn-login">Log In</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const generatedOTP = "123456";
+
+        function setProgress(step) {
+            [1, 2, 3].forEach(n => document.getElementById('progress-' + n).classList.toggle('active', n <= step));
+        }
+
+        function goToStep(step) {
+            if (step === 2) {
+                const required = ['fullname', 'contact', 'course', 'batch', 'password'];
+                const missing = required.some(id => !document.getElementById(id).value.trim());
+                if (missing || !document.getElementById('terms').checked) {
+                    alert("Please complete all required details and accept terms.");
+                    return;
+                }
+                document.getElementById('display-contact').innerText = document.getElementById('contact').value.trim();
+            }
+
+            document.querySelectorAll('.step-container').forEach(c => c.classList.remove('active'));
+            document.getElementById('step-' + step).classList.add('active');
+            setProgress(step);
+        }
+
+        function moveNext(curr, nextId) {
+            curr.value = curr.value.replace(/\D/g, '');
+            if (curr.value.length === 1) {
+                const next = document.getElementById(nextId);
+                if (next) next.focus();
+            }
+        }
+
+        document.getElementById('signup-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const otp = ['otp1', 'otp2', 'otp3', 'otp4', 'otp5', 'otp6'].map(id => document.getElementById(id).value).join('');
+            if (otp !== generatedOTP) {
+                alert("Invalid verification code. Please try again or contact support.");
+                return;
+            }
+            processSignup();
+        });
+
+        function processSignup() {
+            const fullname = document.getElementById('fullname').value.trim();
+            const contact = document.getElementById('contact').value.trim();
+            const pass = document.getElementById('password').value;
+            const course = document.getElementById('course').value;
+            const batch = document.getElementById('batch').value;
+            const parentMobile = document.getElementById('parent-mobile').value.trim();
+            const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+
+            if (users.some(user => user.mobile === contact || user.email === contact)) {
+                alert("This contact is already registered. Please log in.");
+                goToStep(1);
+                return;
+            }
+
+            const studentId = "UDN-" + Math.floor(100 + Math.random() * 900) + "-" + Math.floor(100 + Math.random() * 900) + "-" + Math.floor(10 + Math.random() * 90);
+            const newUser = {
+                name: fullname,
+                mobile: contact.includes('@') ? '' : contact,
+                email: contact.includes('@') ? contact : '',
+                pass,
+                role: "student",
+                course,
+                batch,
+                parentMobile,
+                id: studentId,
+                joinedAt: Date.now(),
+                paid: false,
+                feeStatus: "pending",
+                paymentHistory: []
+            };
+
+            users.push(newUser);
+            localStorage.setItem('udaan-users-db', JSON.stringify(users));
+            localStorage.setItem('udaan-user-session', JSON.stringify(newUser));
+            localStorage.setItem('udaan-student-name', fullname);
+
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('signup-header').style.display = 'none';
+            document.getElementById('auth-footer').style.display = 'none';
+            document.getElementById('signup-success').style.display = 'block';
+            document.getElementById('generated-id').innerText = studentId;
+            setProgress(3);
+        }
+    </script>
+    <script src="./assets/js/translations.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>

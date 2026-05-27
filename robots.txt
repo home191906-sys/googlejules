@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin-panel.html
+Disallow: /admin-results.html
+Disallow: /dashboard.html
+Disallow: /faculty-dashboard.html
+
+Sitemap: https://udaancoaching.com/sitemap.xml

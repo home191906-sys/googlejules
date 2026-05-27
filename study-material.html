@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NCERT study material and textbooks for Class 1 to 12.">
+    <meta name="theme-color" content="#06b6d4">
+    <title>Study Material | Udaan Coaching</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .material-hero {
+            padding: 9rem 0 3rem;
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.08), rgba(248, 250, 252, 0));
+        }
+
+        .material-layout {
+            display: grid;
+            grid-template-columns: 330px minmax(0, 1fr);
+            gap: 1.25rem;
+            align-items: start;
+        }
+
+        .material-panel,
+        .official-access-wrap,
+        .class-card {
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.07);
+        }
+
+        .material-panel {
+            padding: 1.25rem;
+            position: sticky;
+            top: 7.5rem;
+        }
+
+        .material-search {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .class-list {
+            display: grid;
+            gap: 0.55rem;
+            max-height: 520px;
+            overflow: auto;
+            padding-right: 0.25rem;
+        }
+
+        .class-pill {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.8rem 0.9rem;
+            border-radius: 14px;
+            border: 1px solid rgba(6, 182, 212, 0.16);
+            background: white;
+            cursor: pointer;
+            font: inherit;
+            text-align: left;
+            transition: var(--transition);
+        }
+
+        .class-pill.active,
+        .class-pill:hover {
+            background: rgba(6, 182, 212, 0.08);
+            border-color: rgba(6, 182, 212, 0.45);
+            color: var(--primary-hover);
+        }
+
+        .class-card {
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .subject-chip {
+            padding: 0.75rem;
+            border-radius: 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .official-access-wrap {
+            padding: 1.25rem;
+        }
+
+        .access-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .access-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .access-card {
+            padding: 1rem;
+            border-radius: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .access-card i {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .access-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .source-note {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .notes-library {
+            margin-top: 1.25rem;
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.07);
+        }
+
+        .notes-track-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.85rem 0 1rem;
+        }
+
+        .notes-tab {
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            background: #f8fafc;
+            color: #334155;
+            padding: 0.55rem 0.9rem;
+            border-radius: 999px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .notes-tab.active,
+        .notes-tab:hover {
+            background: rgba(6, 182, 212, 0.1);
+            color: #0f766e;
+            border-color: rgba(6, 182, 212, 0.45);
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .notes-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            background: #f8fafc;
+            padding: 0.9rem;
+        }
+
+        .notes-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .notes-card p {
+            margin-bottom: 0.7rem;
+            font-size: 0.9rem;
+        }
+
+        .notes-card .btn {
+            min-height: 36px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.82rem;
+        }
+
+        @media (max-width: 980px) {
+            .material-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .material-panel {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" class="logo-img">
+            </a>
+            <nav class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Home</a></li>
+                    <li><a href="courses.html" class="nav-link" data-i18n="nav-courses">Courses</a></li>
+                    <li><a href="study-material.html" class="nav-link active" data-i18n="nav-material">Study Material</a></li>
+                    <li><a href="mock-test.html" class="nav-link" data-i18n="nav-mock">Mock Test</a></li>
+                    <li><a href="payment.html" class="nav-link" style="color: #FF671F; font-weight: 700;" data-i18n="nav-pay">Pay Fee</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <div class="lang-switcher">
+                    <button id="lang-en" class="lang-btn active">EN</button>
+                    <button id="lang-hi" class="lang-btn">हिं</button>
+                </div>
+                <a href="login.html" class="btn btn-outline" data-i18n="btn-login">Log In</a>
+                <a href="signup.html" class="btn btn-primary" data-i18n="btn-signup">Sign Up Free</a>
+                <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="material-hero">
+            <div class="container">
+                <div class="badge" data-i18n="material-badge">Official NCERT Resources</div>
+                <h1 class="hero-title" style="max-width: 920px;" data-i18n="material-title">NCERT Study Material Class 1 to 12</h1>
+                <p class="hero-subtitle" data-i18n="material-subtitle">All textbooks are linked through the official NCERT Textbooks PDF library.</p>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top: 1rem;">
+            <div class="container material-layout">
+                <aside class="material-panel">
+                    <h2 style="font-size: 1.35rem;" data-i18n="material-quick">Class Quick Access</h2>
+                    <p style="font-size: 0.92rem;" data-i18n="material-quick-desc">Pick a class to see common NCERT subjects and open the official textbook library.</p>
+                    <input id="material-search" class="form-input material-search" type="search" placeholder="Search class or subject" data-i18n-placeholder="material-search">
+                    <div class="class-list" id="class-list"></div>
+                    <p class="source-note">Source: NCERT official Textbooks PDF (I-XII).</p>
+                </aside>
+
+                <div>
+                    <div class="class-card" id="selected-class-card"></div>
+
+                    <div class="official-access-wrap">
+                        <div class="access-header">
+                            <div>
+                                <strong>Official NCERT Access</strong>
+                                <p style="margin: 0; font-size: 0.9rem;">NCERT blocks iframe embedding, so these links open safely in a new tab.</p>
+                            </div>
+                            <a href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="material-open-ncert">Open NCERT</a>
+                        </div>
+                        <div class="access-grid">
+                            <div class="access-card">
+                                <i class="fas fa-book-open"></i>
+                                <h3>Textbooks PDF (Class I-XII)</h3>
+                                <p>Open NCERT, then select Class, Subject, and Book Title to download PDFs.</p>
+                                <a href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener" class="btn btn-outline" data-i18n="material-open-textbooks">Open Textbooks</a>
+                            </div>
+                            <div class="access-card">
+                                <i class="fas fa-list-check"></i>
+                                <h3>How Students Use It</h3>
+                                <p>1. Choose class from the left. 2. Open NCERT. 3. Select the same class and subject. 4. Download PDF.</p>
+                            </div>
+                            <div class="access-card">
+                                <i class="fas fa-shield-halved"></i>
+                                <h3>Official Source</h3>
+                                <p>All downloads remain on NCERT's official website, so students always get authentic books.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notes-library">
+                        <div class="access-header" style="margin-bottom: 0.6rem;">
+                            <div>
+                                <strong>Coaching Notes Library (Subject-wise)</strong>
+                                <p style="margin: 0; font-size: 0.9rem;">Curated links from major India-wide coaching platforms and study providers. Free resources are prioritized where available.</p>
+                            </div>
+                        </div>
+                        <div class="notes-track-tabs" id="notes-track-tabs"></div>
+                        <div class="notes-grid" id="notes-grid"></div>
+                        <p class="source-note">Note: Some coaching portals may require login or paid plan for full PDFs/modules.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-bottom">
+            <p>NCERT materials are served from the official NCERT website. Udaan provides organized access for students.</p>
+        </div>
+    </footer>
+
+    <script>
+        const ncertClasses = [
+            { className: "Class I", subjects: ["Hindi", "English", "Mathematics", "Urdu"] },
+            { className: "Class II", subjects: ["Hindi", "English", "Mathematics", "Urdu"] },
+            { className: "Class III", subjects: ["Hindi", "English", "Mathematics", "Environmental Studies", "Urdu"] },
+            { className: "Class IV", subjects: ["Hindi", "English", "Mathematics", "Environmental Studies", "Urdu"] },
+            { className: "Class V", subjects: ["Hindi", "English", "Mathematics", "Environmental Studies", "Urdu"] },
+            { className: "Class VI", subjects: ["Hindi", "English", "Mathematics", "Science", "Social Science", "Sanskrit", "Urdu"] },
+            { className: "Class VII", subjects: ["Hindi", "English", "Mathematics", "Science", "Social Science", "Sanskrit", "Urdu"] },
+            { className: "Class VIII", subjects: ["Hindi", "English", "Mathematics", "Science", "Social Science", "Sanskrit", "Urdu"] },
+            { className: "Class IX", subjects: ["Hindi", "English", "Mathematics", "Science", "Social Science", "Sanskrit", "Urdu"] },
+            { className: "Class X", subjects: ["Hindi", "English", "Mathematics", "Science", "Social Science", "Sanskrit", "Urdu"] },
+            { className: "Class XI", subjects: ["Physics", "Chemistry", "Mathematics", "Biology", "Accountancy", "Business Studies", "Economics", "History", "Geography", "Political Science", "Psychology", "Sociology", "English", "Hindi"] },
+            { className: "Class XII", subjects: ["Physics", "Chemistry", "Mathematics", "Biology", "Accountancy", "Business Studies", "Economics", "History", "Geography", "Political Science", "Psychology", "Sociology", "English", "Hindi"] }
+        ];
+
+        let activeIndex = 9;
+        let activeTrack = 'JEE';
+
+        const coachingNotesByTrack = {
+            JEE: [
+                {
+                    title: "Vedantu - JEE Main Revision Notes",
+                    desc: "Subject-wise Physics, Chemistry, Maths revision notes (free PDFs).",
+                    url: "https://www.vedantu.com/jee-main/revision-notes"
+                },
+                {
+                    title: "Vedantu - JEE Advanced Notes",
+                    desc: "Quick revision notes aligned to JEE Advanced preparation.",
+                    url: "https://www.vedantu.com/jee-advanced/revision-notes"
+                },
+                {
+                    title: "Physics Wallah - JEE Main Notes",
+                    desc: "Chapter and subject based notes useful for rapid revision.",
+                    url: "https://www.pw.live/iit-jee/exams/jee-main-notes"
+                },
+                {
+                    title: "BYJU'S - JEE Notes",
+                    desc: "JEE Main + Advanced notes with formulas and PYQ links.",
+                    url: "https://byjus.com/jee/jee-notes/"
+                },
+                {
+                    title: "Resonance DLP - JEE Material",
+                    desc: "Official JEE study material and DPP information page.",
+                    url: "https://www.dlpd.resonance.ac.in/Courses/JEE-Main-Study-Material-Pack.aspx"
+                },
+                {
+                    title: "ALLEN - JEE DLP Overview",
+                    desc: "Official ALLEN DLP JEE study material and test package details.",
+                    url: "https://news.allen.in/allens-dlp-study-material-course-for-jee-advanced/"
+                }
+            ],
+            NEET: [
+                {
+                    title: "Vedantu - NEET Revision Notes",
+                    desc: "Physics, Chemistry, Biology combined revision notes (free).",
+                    url: "https://www.vedantu.com/neet/neet-revision-notes"
+                },
+                {
+                    title: "Physics Wallah - NEET Notes",
+                    desc: "Topic-wise NEET notes for Physics, Chemistry and Biology.",
+                    url: "https://www.pw.live/neet/exams/neet-notes"
+                },
+                {
+                    title: "Physics Wallah - Free NEET Toppers Notes",
+                    desc: "Subject-wise topper-curated NEET notes collection.",
+                    url: "https://www.pw.live/exams/neet/free-neet-toppers-notes/"
+                },
+                {
+                    title: "Vedantu - NEET Physics Notes",
+                    desc: "Unit-wise Physics notes for NEET revision.",
+                    url: "https://www.vedantu.com/neet/neet-physics-revision-notes"
+                },
+                {
+                    title: "Resonance DLP - NEET Material",
+                    desc: "Official NEET study material and DPP page.",
+                    url: "https://www.dlpd.resonance.ac.in/Courses/NEET-Study-Material-Pack.aspx"
+                },
+                {
+                    title: "ALLEN - NEET DLP Overview",
+                    desc: "ALLEN NEET study material and test series overview.",
+                    url: "https://news.allen.in/allens-dlp-study-material-course-for-neet-ug-aiims/"
+                }
+            ],
+            Foundation: [
+                {
+                    title: "Vedantu - Class 10 Science Notes",
+                    desc: "Chapter-wise notes useful for board + foundation base.",
+                    url: "https://www.vedantu.com/revision-notes/cbse-class-10-science-notes"
+                },
+                {
+                    title: "Vedantu - Class 10 All Subject Notes",
+                    desc: "Class 10 notes for Maths, Science, SST and language subjects.",
+                    url: "https://www.vedantu.com/revision-notes/cbse-class-10-notes"
+                },
+                {
+                    title: "BYJU'S - JEE Notes (Early Bridge)",
+                    desc: "Useful for early PCM bridge from school to competitive prep.",
+                    url: "https://byjus.com/jee/jee-main-notes/"
+                },
+                {
+                    title: "ALLEN - Foundation Program FAQ",
+                    desc: "Program format, study material type and schedule reference.",
+                    url: "https://allen.in/class-7/jee-neet-foundation-and-ncert-online-programs_faq"
+                },
+                {
+                    title: "Aakash DLP - Foundation/JEE/NEET Journey",
+                    desc: "Official DLP ecosystem page for structured prep flow.",
+                    url: "https://dlp.aakash.ac.in/"
+                },
+                {
+                    title: "NCERT Textbooks (Class I-X)",
+                    desc: "Primary source books for all foundation batches.",
+                    url: "https://ncert.nic.in/textbook.php"
+                }
+            ],
+            Commerce: [
+                {
+                    title: "Vedantu - Class 12 Accountancy Notes",
+                    desc: "Complete accountancy chapter-wise notes for board and CA base.",
+                    url: "https://www.vedantu.com/revision-notes/cbse-class-12-accountancy-notes"
+                },
+                {
+                    title: "Vedantu - Accountancy Part 1 (Partnership)",
+                    desc: "Detailed notes for partnership accounting.",
+                    url: "https://www.vedantu.com/revision-notes/cbse-class-12-accountancy-part-1-notes"
+                },
+                {
+                    title: "Vedantu - Accountancy Part 2 (Company + Analysis)",
+                    desc: "Share capital, ratios, cash flow and statement analysis.",
+                    url: "https://www.vedantu.com/revision-notes/cbse-class-12-accountancy-part-2-notes"
+                },
+                {
+                    title: "Vedantu - Class 12 Economics Notes",
+                    desc: "Macro + Micro revision notes for exam preparation.",
+                    url: "https://www.vedantu.com/revision-notes/cbse-class-12-economics-notes"
+                },
+                {
+                    title: "Vedantu - Macroeconomics Notes",
+                    desc: "Focused macroeconomics chapter notes for board and CA base.",
+                    url: "https://www.vedantu.com/revision-notes/cbse-class-12-macro-economics-notes"
+                },
+                {
+                    title: "Vedantu - Microeconomics Notes",
+                    desc: "Consumer, production, market and elasticity topics in short form.",
+                    url: "https://www.vedantu.com/revision-notes/cbse-class-12-micro-economics-notes"
+                }
+            ]
+        };
+
+        function renderClassList(filter = "") {
+            const list = document.getElementById('class-list');
+            const query = filter.trim().toLowerCase();
+            list.innerHTML = "";
+            ncertClasses.forEach((item, index) => {
+                const haystack = `${item.className} ${item.subjects.join(' ')}`.toLowerCase();
+                if (query && !haystack.includes(query)) return;
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `class-pill ${index === activeIndex ? 'active' : ''}`;
+                button.innerHTML = `<strong>${item.className}</strong><span>${item.subjects.length} subjects</span>`;
+                button.onclick = () => {
+                    activeIndex = index;
+                    renderClassList(document.getElementById('material-search').value);
+                    renderSelectedClass();
+                };
+                list.appendChild(button);
+            });
+        }
+
+        function renderSelectedClass() {
+            const selected = ncertClasses[activeIndex];
+            document.getElementById('selected-class-card').innerHTML = `
+                <div class="flex-between">
+                    <div>
+                        <div class="badge">${selected.className}</div>
+                        <h2 style="font-size: 1.8rem;">NCERT Books and Subjects</h2>
+                        <p>Open the official NCERT page and select ${selected.className} to download book PDFs chapter-wise or as available on NCERT.</p>
+                    </div>
+                    <a href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener" class="btn btn-outline">Official Page</a>
+                </div>
+                <div class="subject-grid">
+                    ${selected.subjects.map(subject => `<div class="subject-chip">${subject}</div>`).join('')}
+                </div>
+            `;
+        }
+
+        function renderTrackTabs() {
+            const tabs = document.getElementById('notes-track-tabs');
+            tabs.innerHTML = Object.keys(coachingNotesByTrack).map(track => `
+                <button type="button" class="notes-tab ${track === activeTrack ? 'active' : ''}" data-track="${track}">${track}</button>
+            `).join('');
+
+            tabs.querySelectorAll('.notes-tab').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    activeTrack = btn.dataset.track;
+                    renderTrackTabs();
+                    renderNotesGrid();
+                });
+            });
+        }
+
+        function renderNotesGrid() {
+            const notes = coachingNotesByTrack[activeTrack] || [];
+            const grid = document.getElementById('notes-grid');
+            grid.innerHTML = notes.map(item => `
+                <article class="notes-card">
+                    <h3>${item.title}</h3>
+                    <p>${item.desc}</p>
+                    <a class="btn btn-outline" href="${item.url}" target="_blank" rel="noopener">Open Resource</a>
+                </article>
+            `).join('');
+        }
+
+        document.getElementById('material-search').addEventListener('input', event => renderClassList(event.target.value));
+        renderClassList();
+        renderSelectedClass();
+        renderTrackTabs();
+        renderNotesGrid();
+    </script>
+    <script src="./assets/js/translations.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>

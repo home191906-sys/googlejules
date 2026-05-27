@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Udaan Coaching programs for Foundation classes, IIT-JEE, NEET, Commerce, CA Foundation, crash courses, and test preparation.">
+    <meta name="theme-color" content="#06b6d4">
+    <title>All Courses | Udaan Coaching</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" class="logo-img">
+            </a>
+            <nav class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link" data-i18n="nav-home">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link" data-i18n="nav-about">About Us</a></li>
+                    <li><a href="courses.html" class="nav-link active" data-i18n="nav-courses">Courses</a></li>
+                    <li><a href="study-material.html" class="nav-link" data-i18n="nav-material">Study Material</a></li>
+                    <li><a href="index.html#features" class="nav-link" data-i18n="nav-features">Features</a></li>
+                    <li><a href="payment.html" class="nav-link" style="color: #FF671F; font-weight: 700;" data-i18n="nav-pay">Pay Fee</a></li>
+                    <li><a href="contact.html" class="nav-link" data-i18n="nav-contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <div class="lang-switcher">
+                    <button id="lang-en" class="lang-btn active">EN</button>
+                    <button id="lang-hi" class="lang-btn">हिं</button>
+                </div>
+                <a href="login.html" class="btn btn-outline" data-i18n="btn-login">Log In</a>
+                <a href="signup.html" class="btn btn-primary" data-i18n="btn-signup">Sign Up Free</a>
+                <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding-top: 120px; padding-bottom: 80px;">
+        <section id="courses" class="section">
+            <div class="container">
+                <div class="section-header text-center fade-up-anim">
+                    <h1 class="section-title" data-i18n="courses-page-title">Programs Built Like Top Coaching Systems</h1>
+                    <p class="section-subtitle" data-i18n="courses-page-subtitle">Structured modules, daily practice sheets, weekly tests, analytics, and mentor-led doubt resolution.</p>
+                </div>
+
+                <div class="course-tabs-container">
+                    <div class="course-tabs fade-up-anim">
+                        <button class="tab-btn active" onclick="switchTab('tab-school', event)">School (6-10)</button>
+                        <button class="tab-btn" onclick="switchTab('tab-science', event)">Science (11-12)</button>
+                        <button class="tab-btn" onclick="switchTab('tab-jee', event)">IIT-JEE</button>
+                        <button class="tab-btn" onclick="switchTab('tab-neet', event)">NEET</button>
+                        <button class="tab-btn" onclick="switchTab('tab-commerce', event)">Commerce</button>
+                    </div>
+                </div>
+
+                <div class="tab-content active" id="tab-school">
+                    <div class="grid-3-col">
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Class 6-8</span></div>
+                            <h3 class="course-title">Foundation Launchpad</h3>
+                            <p class="course-desc">Maths-science fundamentals, reasoning drills, and confidence building through small batches.</p>
+                            <div class="course-highlights"><span>Duration: 9 months</span><span>Classes: 4 days/week</span><span>Testing: Weekly chapter quiz</span><span>Doubt Support: Daily 45-min lab</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Class 8-10</span></div>
+                            <h3 class="course-title">Olympiad + NTSE Track</h3>
+                            <p class="course-desc">Higher-order thinking program with topic ladders, past papers, and speed-accuracy mentoring.</p>
+                            <div class="course-highlights"><span>Duration: 10 months</span><span>Batch Size: 25-35</span><span>Testing: Bi-weekly challenge test</span><span>Extras: Rank predictor analytics</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Class 9-10</span></div>
+                            <h3 class="course-title">Board + Foundation Integrated</h3>
+                            <p class="course-desc">Board excellence with early competition prep, revision sprints, and performance dashboards.</p>
+                            <div class="course-highlights"><span>Duration: Full academic year</span><span>Classes: 5 days/week</span><span>Testing: Monthly full syllabus</span><span>Parent Connect: Progress review calls</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-science">
+                    <div class="grid-3-col">
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Class 11-12</span></div>
+                            <h3 class="course-title">Integrated PCM/PCB Master Batch</h3>
+                            <p class="course-desc">NCERT-first academics with competitive overlays, timed DPPs, and fixed revision calendar.</p>
+                            <div class="course-highlights"><span>Duration: 2 years</span><span>Classes: 5-6 days/week</span><span>Testing: Weekly + monthly major</span><span>Doubt System: App + in-class queues</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Class 12 Pass</span></div>
+                            <h3 class="course-title">Dropper Intensive Program</h3>
+                            <p class="course-desc">One-year repeaters program with micro-planning, error notebooks, and score improvement coaching.</p>
+                            <div class="course-highlights"><span>Duration: 11-12 months</span><span>Batch Size: 35-45</span><span>Testing: Every Sunday</span><span>Mentoring: Fortnightly 1-on-1</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Last 3-4 Months</span></div>
+                            <h3 class="course-title">Crash Revision + Test Camp</h3>
+                            <p class="course-desc">High-intensity revision cycle for formulas, NCERT hotspots, and paper strategy.</p>
+                            <div class="course-highlights"><span>Duration: 14-16 weeks</span><span>Mode: Online + Offline</span><span>Testing: Alternate-day mixed tests</span><span>Analysis: Post-test live breakdown</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-jee">
+                    <div class="grid-3-col">
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">JEE Main</span></div>
+                            <h3 class="course-title">JEE Main Rank Booster</h3>
+                            <p class="course-desc">Exam-pattern aligned prep focused on speed, precision, and percentile growth.</p>
+                            <div class="course-highlights"><span>Target: NTA pattern mastery</span><span>DPP: Daily mixed sets</span><span>Tests: 3 test cycles/month</span><span>Outcome: Percentile tracker dashboard</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">JEE Advanced</span></div>
+                            <h3 class="course-title">Advanced Problem Solving Elite</h3>
+                            <p class="course-desc">Multi-concept and proof-style questions with deep discussion and mentor-led strategy sessions.</p>
+                            <div class="course-highlights"><span>Target: Top rank focus</span><span>Batch: Limited seats</span><span>Tests: Advanced pattern papers</span><span>Support: Weekly strategy clinic</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">2-Year Track</span></div>
+                            <h3 class="course-title">Class 11 + 12 Long-Term Program</h3>
+                            <p class="course-desc">Phase-wise syllabus completion with revision blocks and cross-topic integration tests.</p>
+                            <div class="course-highlights"><span>Duration: 24 months</span><span>Classes: 5 days/week</span><span>Testing: Weekly + quarterly benchmark</span><span>Mentoring: Monthly parent review</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-neet">
+                    <div class="grid-3-col">
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">2-Year NEET</span></div>
+                            <h3 class="course-title">NEET Classroom Core Program</h3>
+                            <p class="course-desc">NCERT-anchored Biology plus conceptual Physics/Chemistry with retention-focused practice.</p>
+                            <div class="course-highlights"><span>Duration: 2 years</span><span>Classes: 5 days/week</span><span>Testing: Weekly AIATS style</span><span>Revision: NCERT map sessions</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Dropper</span></div>
+                            <h3 class="course-title">NEET Repeaters Precision Batch</h3>
+                            <p class="course-desc">Focused comeback plan with weak-area repair, test temperament, and score jump roadmap.</p>
+                            <div class="course-highlights"><span>Duration: 11 months</span><span>Batch Size: 40</span><span>Tests: Full paper every Sunday</span><span>Mentoring: Fortnightly score audit</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Final Sprint</span></div>
+                            <h3 class="course-title">NEET Crash Program</h3>
+                            <p class="course-desc">Rapid revision with high-yield modules, smart notes, and time-bound exam simulations.</p>
+                            <div class="course-highlights"><span>Duration: 90-120 days</span><span>Mode: Hybrid</span><span>Tests: Alternate-day</span><span>Support: Daily doubt slot</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-commerce">
+                    <div class="grid-3-col">
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Class 11-12</span></div>
+                            <h3 class="course-title">Accounts + Economics Command Batch</h3>
+                            <p class="course-desc">Board and concept mastery for accountancy, economics, and business studies with applied cases.</p>
+                            <div class="course-highlights"><span>Duration: Academic year</span><span>Classes: 4-5 days/week</span><span>Testing: Weekly unit test</span><span>Extras: Answer-writing workshops</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">After Class 12</span></div>
+                            <h3 class="course-title">CA Foundation Result-Oriented Track</h3>
+                            <p class="course-desc">Paper-wise roadmap with scanner practice, MCQ strategy, and exam attempt discipline.</p>
+                            <div class="course-highlights"><span>Duration: 10-11 months</span><span>Mode: Hybrid</span><span>Testing: Full mock series</span><span>Mentoring: Attempt planning calls</span></div>
+                        </div>
+                        <div class="course-card glass-card course-compact">
+                            <div class="course-meta"><span class="category">Commerce Pro</span></div>
+                            <h3 class="course-title">CMA Foundation + Aptitude Bridge</h3>
+                            <p class="course-desc">Industry-style commerce prep with analytical skills and regular performance checkpoints.</p>
+                            <div class="course-highlights"><span>Duration: 9 months</span><span>Batch: Focused mentorship</span><span>Tests: Monthly grand mock</span><span>Support: Doubt desk + recording access</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" class="logo-img">
+                    </a>
+                    <p data-i18n="footer-desc">Empowering the next generation of leaders and professionals through accessible, premium education.</p>
+                    <div class="social-links">
+                        <a href="https://wa.me/919680141133" target="_blank" class="social-icon whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://instagram.com/rgajraj1" target="_blank" class="social-icon instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/" target="_blank" class="social-icon youtube" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4 data-i18n="footer-links-title">Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home" data-i18n="nav-home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="nav-about">About Us</a></li>
+                        <li><a href="courses.html" data-i18n="nav-courses">All Courses</a></li>
+                        <li><a href="study-material.html" data-i18n="nav-material">Study Material</a></li>
+                        <li><a href="contact.html" data-i18n="nav-contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h4 data-i18n="footer-contact-title">Contact Support</h4>
+                    <p>Village Majri Bhanda, Rajwara, Mundawar, Khairthal Tijara, Rajasthan 301427</p>
+                    <p>+91 99502 32074</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer-rights">&copy; 2026 Udaan Coaching. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./assets/js/translations.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>

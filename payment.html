@@ -1,0 +1,443 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Secure UPI fee payment submission for Udaan Coaching Institute with transaction ID verification by the admin team.">
+    <meta name="theme-color" content="#06b6d4">
+    <title>Pay Fee | Udaan Coaching</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="navbar scrolled">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" class="logo-img" style="height: 70px;">
+            </a>
+            <div class="nav-actions">
+                <a href="index.html" class="btn btn-outline" data-i18n="nav-home">Home</a>
+                <div class="lang-switcher">
+                    <button id="lang-en" class="lang-btn active">EN</button>
+                    <button id="lang-hi" class="lang-btn">हिं</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-bg"></div>
+        <div class="auth-bg-text">FEE</div>
+
+        <div class="glass-card auth-card auth-card-wide fade-up-anim">
+            <div class="auth-header" id="payment-header">
+                <h2 data-i18n="payment-title">Secure Fee Payment</h2>
+                <p data-i18n="payment-subtitle">Confirm student details, pay through UPI, and submit your transaction ID for verification.</p>
+            </div>
+
+            <div class="payment-summary-strip">
+                <div>
+                    <span data-i18n="payment-student">Student</span>
+                    <strong id="summary-name">Guest Student</strong>
+                </div>
+                <div>
+                    <span data-i18n="payment-course">Course</span>
+                    <strong id="summary-course">Not selected</strong>
+                </div>
+                <div>
+                    <span data-i18n="payment-status">Status</span>
+                    <strong id="summary-status">Pending</strong>
+                </div>
+            </div>
+
+            <form id="payment-form" class="auth-form">
+                <div id="payment-step-1" class="step-container active">
+                    <div class="signup-grid">
+                        <div class="form-group">
+                            <label for="student_id" class="form-label" data-i18n="payment-student-id">Student ID / Roll No.</label>
+                            <input type="text" id="student_id" class="form-input" placeholder="e.g. UDN-123-456-78" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fullname" class="form-label" data-i18n="payment-fullname">Full Name</label>
+                            <input type="text" id="fullname" class="form-input" placeholder="Student name" required>
+                        </div>
+                    </div>
+
+                    <div class="signup-grid">
+                        <div class="form-group">
+                            <label for="course" class="form-label" data-i18n="payment-course">Course</label>
+                            <select id="course" class="form-input" required>
+                                <option value="" disabled selected>Select Course</option>
+                                <option value="FND6">Foundation (Class 6)</option>
+                                <option value="FND7">Foundation (Class 7)</option>
+                                <option value="FND8">Foundation (Class 8)</option>
+                                <option value="FND9">Foundation (Class 9)</option>
+                                <option value="FND10">Foundation (Class 10)</option>
+                                <option value="JEE">Target JEE (11-12)</option>
+                                <option value="NEET">Target NEET (11-12)</option>
+                                <option value="CA_FND">CA Foundation</option>
+                                <option value="COMMERCE">Commerce (11-12)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="batch" class="form-label" data-i18n="signup-batch">Batch</label>
+                            <select id="batch" class="form-input" required>
+                                <option value="" disabled selected>Select Batch</option>
+                                <option value="Morning A">Morning (A)</option>
+                                <option value="Evening B">Evening (B)</option>
+                                <option value="Online">Online</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="signup-grid">
+                        <div class="form-group">
+                            <label for="amount" class="form-label" data-i18n="payment-amount">Amount (₹)</label>
+                            <input type="number" id="amount" class="form-input" placeholder="Select course first" min="1" readonly required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Selected Fee Plan</label>
+                            <input type="text" id="selected-plan-label" class="form-input" value="Admission Token" readonly>
+                        </div>
+                    </div>
+
+                    <div class="role-use-panel" id="course-fee-panel">
+                        <div class="role-use-head">
+                            <strong id="fee-course-title">Select course to see fee</strong>
+                            <span id="fee-course-total">Total fee: ₹0</span>
+                        </div>
+                        <ul>
+                            <li id="fee-batch-note">Batch selection will be saved with your payment request.</li>
+                        </ul>
+                    </div>
+
+                    <div class="fee-plan-grid">
+                        <button type="button" class="fee-plan active" data-plan="token" data-amount="5000" onclick="selectPlan(this)">
+                            <strong>Admission Token</strong>
+                            <span>₹5,000</span>
+                            <small>Seat confirmation</small>
+                        </button>
+                        <button type="button" class="fee-plan" data-plan="installment" data-amount="15000" onclick="selectPlan(this)">
+                            <strong>First Installment</strong>
+                            <span>₹15,000</span>
+                            <small>Start classes</small>
+                        </button>
+                        <button type="button" class="fee-plan" data-plan="full" data-amount="45000" onclick="selectPlan(this)">
+                            <strong>Full Fee</strong>
+                            <span>₹45,000</span>
+                            <small>Full access</small>
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="payment-method">Secure Payment Method</label>
+                        <div class="payment-method-grid">
+                            <div class="method-option active">
+                                <i class="fas fa-qrcode"></i>
+                                <strong data-i18n="payment-upi">UPI / QR</strong>
+                                <small data-i18n="payment-upi-note">Pay only to official UPI ID: 9680141133-2@ybl</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="goPaymentStep(2)" class="btn btn-primary btn-lg auth-btn shadow-pulse" data-i18n="payment-review-btn">Review Payment</button>
+                </div>
+
+                <div id="payment-step-2" class="step-container">
+                    <div class="review-box">
+                        <h3 data-i18n="payment-review-title">Review Details</h3>
+                        <div><span>Student ID</span><strong id="review-id">-</strong></div>
+                        <div><span>Name</span><strong id="review-name">-</strong></div>
+                        <div><span>Course</span><strong id="review-course">-</strong></div>
+                        <div><span>Batch</span><strong id="review-batch">-</strong></div>
+                        <div><span>Plan</span><strong id="review-plan">-</strong></div>
+                        <div><span>Amount</span><strong id="review-amount">₹0</strong></div>
+                        <div><span>Method</span><strong id="review-method">UPI</strong></div>
+                    </div>
+
+                    <div id="upi-box" class="payment-detail-box">
+                        <h4 data-i18n="payment-pay-upi">Pay via UPI</h4>
+                        <img id="qr-image" alt="UPI QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=9680141133-2@ybl&pn=UDAAN%20Coaching&am=5000">
+                        <p>Scan the QR or open your UPI app. Pay only to <strong>9680141133-2@ybl</strong>.</p>
+                        <a id="upi-link" href="upi://pay?pa=9680141133-2@ybl&pn=UDAAN%20Coaching&am=5000" class="btn btn-outline btn-sm" data-i18n="payment-open-upi">Open UPI App</a>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="utr_input" class="form-label" data-i18n="payment-utr">UPI Transaction ID / UTR</label>
+                        <input type="text" id="utr_input" class="form-input" placeholder="Enter transaction ID after payment" minlength="6" required>
+                    </div>
+
+                    <button type="button" onclick="completePayment()" class="btn btn-primary btn-lg auth-btn" data-i18n="payment-submit">Submit for Verification</button>
+                    <button type="button" onclick="goPaymentStep(1)" class="auth-back-btn" data-i18n="payment-edit">← Edit Details</button>
+                </div>
+
+                <div id="payment-step-3" class="step-container">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+                        <h3 data-i18n="payment-pending-title">Verification Pending</h3>
+                        <p data-i18n="payment-pending-desc">Your payment details have been submitted to the Udaan admin team.</p>
+                    </div>
+                </div>
+            </form>
+
+            <div id="payment-success" class="success-panel">
+                <h3 data-i18n="payment-submitted">Payment Submitted</h3>
+                <p data-i18n="payment-submitted-desc">Your payment is pending admin verification. Your fee status will be updated after confirmation.</p>
+                <div class="receipt-card">
+                    <div><span>Request No.</span><strong id="receipt-id">PAY-000000</strong></div>
+                    <div><span>Student ID</span><strong id="receipt-student">-</strong></div>
+                    <div><span>Course</span><strong id="receipt-course">-</strong></div>
+                    <div><span>Batch</span><strong id="receipt-batch">-</strong></div>
+                    <div><span>Plan</span><strong id="receipt-plan">-</strong></div>
+                    <div><span>Amount</span><strong id="receipt-amount">₹0</strong></div>
+                    <div><span>Method</span><strong id="receipt-method">UPI</strong></div>
+                    <div><span>Transaction ID</span><strong id="receipt-utr">-</strong></div>
+                </div>
+                <div class="signup-actions">
+                    <a href="dashboard.html" class="btn btn-primary" data-i18n="btn-open-dashboard">Open Student Dashboard</a>
+                    <a href="index.html" class="btn btn-outline" data-i18n="btn-back-home">Back to Home</a>
+                </div>
+            </div>
+
+            <div class="auth-footer" id="payment-footer">
+                <span data-i18n="payment-secure-note">🔒 Secure UPI payment. We never ask for card number, CVV, OTP, or UPI PIN on this website.</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const officialUpiId = "9680141133-2@ybl";
+        const courseFeeData = {
+            FND6: { label: "Foundation (Class 6)", fullFee: 18000 },
+            FND7: { label: "Foundation (Class 7)", fullFee: 18000 },
+            FND8: { label: "Foundation (Class 8)", fullFee: 18000 },
+            FND9: { label: "Foundation (Class 9)", fullFee: 22000 },
+            FND10: { label: "Foundation (Class 10)", fullFee: 25000 },
+            JEE: { label: "Target JEE (11-12)", fullFee: 45000 },
+            NEET: { label: "Target NEET (11-12)", fullFee: 42000 },
+            CA_FND: { label: "CA Foundation", fullFee: 35000 },
+            COMMERCE: { label: "Commerce (11-12)", fullFee: 30000 }
+        };
+
+        const batchFeeRules = {
+            "Morning A": { label: "Morning (A)", multiplier: 1 },
+            "Evening B": { label: "Evening (B)", multiplier: 1 },
+            "Online": { label: "Online", multiplier: 0.9 }
+        };
+
+        const planLabels = {
+            token: "Admission Token",
+            installment: "First Installment",
+            full: "Full Fee"
+        };
+
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            currentUser = JSON.parse(localStorage.getItem('udaan-user-session') || 'null');
+            if (currentUser && (currentUser.role || 'student') !== 'student') {
+                window.location.href = currentUser.role === 'faculty' ? 'faculty-dashboard.html' : 'admin-panel.html';
+                return;
+            }
+            hydrateFromSession();
+            document.getElementById('course').addEventListener('change', updateFeePlans);
+            document.getElementById('batch').addEventListener('change', updateFeePlans);
+            updateFeePlans();
+            updateMethodUI();
+        });
+
+        function hydrateFromSession() {
+            if (!currentUser) return;
+            document.getElementById('student_id').value = currentUser.id || '';
+            document.getElementById('fullname').value = currentUser.name || '';
+            document.getElementById('course').value = currentUser.course || '';
+            document.getElementById('batch').value = currentUser.batch || '';
+            document.getElementById('summary-name').innerText = currentUser.name || 'Student';
+            document.getElementById('summary-course').innerText = getCourseLabel(currentUser.course) || 'Not selected';
+            document.getElementById('summary-status').innerText = currentUser.feeStatus === 'verification_pending' ? 'Verification Pending' : (currentUser.paid ? 'Paid' : 'Pending');
+        }
+
+        function formatRupee(amount) {
+            return '₹' + Number(amount || 0).toLocaleString('en-IN');
+        }
+
+        function getCourseLabel(courseId) {
+            return courseFeeData[courseId]?.label || courseId || '';
+        }
+
+        function getBatchLabel(batchId) {
+            return batchFeeRules[batchId]?.label || batchId || '';
+        }
+
+        function getAdjustedFullFee() {
+            const course = document.getElementById('course').value;
+            const batch = document.getElementById('batch').value;
+            const fullFee = courseFeeData[course]?.fullFee || 0;
+            const multiplier = batchFeeRules[batch]?.multiplier || 1;
+            return Math.round(fullFee * multiplier);
+        }
+
+        function getPlanAmount(plan, fullFee) {
+            if (!fullFee) return 0;
+            if (plan === 'token') return Math.min(5000, fullFee);
+            if (plan === 'installment') return Math.min(Math.ceil(fullFee * 0.4), fullFee);
+            return fullFee;
+        }
+
+        function updateFeePlans() {
+            const course = document.getElementById('course').value;
+            const batch = document.getElementById('batch').value;
+            const fullFee = getAdjustedFullFee();
+
+            document.getElementById('summary-course').innerText = getCourseLabel(course) || 'Not selected';
+            document.getElementById('fee-course-title').innerText = course ? getCourseLabel(course) : 'Select course to see fee';
+            document.getElementById('fee-course-total').innerText = fullFee ? `Total fee: ${formatRupee(fullFee)}` : 'Total fee: ₹0';
+            document.getElementById('fee-batch-note').innerText = batch === 'Online'
+                ? 'Online batch fee is calculated with the current online batch concession.'
+                : (batch ? `${getBatchLabel(batch)} batch selected for this payment request.` : 'Select a batch to save it with your payment request.');
+
+            document.querySelectorAll('.fee-plan').forEach(plan => {
+                const amount = getPlanAmount(plan.dataset.plan, fullFee);
+                plan.dataset.amount = amount;
+                plan.querySelector('span').innerText = formatRupee(amount);
+            });
+
+            const activePlan = document.querySelector('.fee-plan.active') || document.querySelector('.fee-plan');
+            if (activePlan) selectPlan(activePlan);
+        }
+
+        function selectPlan(button) {
+            document.querySelectorAll('.fee-plan').forEach(plan => plan.classList.remove('active'));
+            button.classList.add('active');
+            document.getElementById('amount').value = button.dataset.amount;
+            document.getElementById('selected-plan-label').value = planLabels[button.dataset.plan] || button.querySelector('strong').innerText;
+            updateQr();
+        }
+
+        function selectedMethod() {
+            return "UPI";
+        }
+
+        function updateMethodUI() {
+            document.querySelectorAll('.method-option').forEach(option => option.classList.add('active'));
+            const upiBox = document.getElementById('upi-box');
+            if (upiBox) upiBox.style.display = 'block';
+            updateQr();
+        }
+
+        function updateQr() {
+            const amount = document.getElementById('amount').value || 0;
+            const name = encodeURIComponent(document.getElementById('fullname').value || 'UDAAN Student');
+            const upiData = `upi://pay?pa=${officialUpiId}&pn=${name}&am=${amount}&cu=INR`;
+            document.getElementById('qr-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiData)}`;
+            document.getElementById('upi-link').href = upiData;
+        }
+
+        function goPaymentStep(step) {
+            if (step === 2) {
+                const required = ['student_id', 'fullname', 'course', 'batch', 'amount'];
+                if (required.some(id => !document.getElementById(id).value.trim())) {
+                    alert("Please complete student, course, batch and fee details.");
+                    return;
+                }
+                updateReview();
+            }
+            document.querySelectorAll('#payment-form .step-container').forEach(section => section.classList.remove('active'));
+            document.getElementById('payment-step-' + step).classList.add('active');
+        }
+
+        function updateReview() {
+            const method = selectedMethod();
+            document.getElementById('review-id').innerText = document.getElementById('student_id').value;
+            document.getElementById('review-name').innerText = document.getElementById('fullname').value;
+            document.getElementById('review-course').innerText = getCourseLabel(document.getElementById('course').value);
+            document.getElementById('review-batch').innerText = getBatchLabel(document.getElementById('batch').value);
+            document.getElementById('review-plan').innerText = document.getElementById('selected-plan-label').value;
+            document.getElementById('review-amount').innerText = formatRupee(document.getElementById('amount').value);
+            document.getElementById('review-method').innerText = method;
+            updateMethodUI();
+        }
+
+        function completePayment() {
+            const utr = document.getElementById('utr_input').value.trim();
+            if (utr.length < 6) {
+                alert("Please enter a valid UPI Transaction ID / UTR after completing payment.");
+                return;
+            }
+
+            const receiptId = 'PAY-' + Date.now();
+            const amount = Number(document.getElementById('amount').value);
+            const studentId = document.getElementById('student_id').value.trim();
+            const course = document.getElementById('course').value;
+            const batch = document.getElementById('batch').value;
+            const plan = document.querySelector('.fee-plan.active')?.dataset.plan || 'token';
+            const method = selectedMethod();
+            const historyItem = {
+                receiptId,
+                amount,
+                method,
+                utr,
+                upiId: officialUpiId,
+                status: 'verification_pending',
+                date: new Date().toLocaleString(),
+                studentId,
+                course,
+                courseLabel: getCourseLabel(course),
+                batch,
+                batchLabel: getBatchLabel(batch),
+                plan,
+                planLabel: planLabels[plan]
+            };
+
+            let users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+            const matchIndex = users.findIndex(user => user.id === studentId || user.name === document.getElementById('fullname').value.trim());
+            if (matchIndex !== -1) {
+                users[matchIndex].paid = false;
+                users[matchIndex].feeStatus = 'verification_pending';
+                users[matchIndex].course = course;
+                users[matchIndex].batch = batch;
+                users[matchIndex].paymentHistory = users[matchIndex].paymentHistory || [];
+                users[matchIndex].paymentHistory.push(historyItem);
+                localStorage.setItem('udaan-users-db', JSON.stringify(users));
+
+                if (currentUser && (currentUser.id === users[matchIndex].id || currentUser.name === users[matchIndex].name)) {
+                    currentUser = users[matchIndex];
+                    localStorage.setItem('udaan-user-session', JSON.stringify(currentUser));
+                }
+            }
+
+            const submissions = JSON.parse(localStorage.getItem('udaan-payment-submissions') || '[]');
+            submissions.push({
+                ...historyItem,
+                name: document.getElementById('fullname').value.trim(),
+                course,
+                batch
+            });
+            localStorage.setItem('udaan-payment-submissions', JSON.stringify(submissions));
+            localStorage.setItem('udaan-last-payment', JSON.stringify(historyItem));
+            document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('payment-header').style.display = 'none';
+            document.getElementById('payment-footer').style.display = 'none';
+            document.getElementById('payment-success').style.display = 'block';
+            document.getElementById('summary-status').innerText = 'Verification Pending';
+            document.getElementById('receipt-id').innerText = receiptId;
+            document.getElementById('receipt-student').innerText = studentId;
+            document.getElementById('receipt-course').innerText = getCourseLabel(course);
+            document.getElementById('receipt-batch').innerText = getBatchLabel(batch);
+            document.getElementById('receipt-plan').innerText = planLabels[plan];
+            document.getElementById('receipt-amount').innerText = formatRupee(amount);
+            document.getElementById('receipt-method').innerText = method;
+            document.getElementById('receipt-utr').innerText = utr;
+        }
+    </script>
+    <script src="./assets/js/translations.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>

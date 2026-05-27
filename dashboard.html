@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Udaan Lite | Student Portal</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --db-primary: #06b6d4;
+            --db-secondary: #8b5cf6;
+            --db-bg: #f0f9ff;
+            --db-card-bg: rgba(255, 255, 255, 0.85);
+            --db-sidebar: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            background-color: var(--db-bg);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+        }
+
+        /* Sidebar */
+        .db-sidebar {
+            width: 280px;
+            background: var(--db-sidebar);
+            backdrop-filter: blur(15px);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 2.5rem 1.5rem;
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            border-right: 1px solid rgba(6, 182, 212, 0.1);
+            overflow: hidden;
+        }
+
+        /* Animated Birds in Sidebar Background */
+        .sidebar-birds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .bird {
+            position: absolute;
+            font-size: 1.2rem;
+            animation: fly linear infinite;
+            color: var(--db-primary);
+        }
+
+        @keyframes fly {
+            0% { transform: translate(-50px, 110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(350px, -10vh) rotate(-20deg); opacity: 0; }
+        }
+
+        .db-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #1e293b;
+        }
+
+        .db-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            color: #64748b;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .db-nav-item i { font-size: 1.2rem; }
+
+        .db-nav-item:hover, .db-nav-item.active {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--db-primary);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.05);
+        }
+
+        .db-nav-item.active {
+            background: linear-gradient(135deg, var(--db-primary), var(--db-secondary));
+            color: white;
+        }
+
+        /* Main Content */
+        .db-main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 2.5rem 3.5rem;
+            max-width: 1400px;
+        }
+
+        /* Header Area */
+        .db-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-trigger {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        /* Stat Cards */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--db-card-bg);
+            backdrop-filter: blur(12px);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover { transform: translateY(-5px); }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: var(--db-primary);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+
+        .stat-value { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.2rem; }
+        .stat-label { color: #64748b; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Course List */
+        .section-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+        .section-title span { color: var(--db-primary); }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+            transition: 0.3s;
+            border: 1px solid #f1f5f9;
+        }
+
+        .course-card:hover { border-color: var(--db-primary); box-shadow: 0 15px 35px rgba(6, 182, 212, 0.1); }
+
+        .course-tag {
+            padding: 0.4rem 1rem;
+            background: #ecfeff;
+            color: #0891b2;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+        }
+
+        .course-progress {
+            margin: 1.5rem 0;
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-main);
+            border-radius: 100px;
+            width: 45%;
+        }
+
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border-collapse: separate;
+            border-spacing: 0 0.8rem;
+        }
+
+        .results-table th { padding: 1rem; text-align: left; color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; font-weight: 800; }
+        .results-table td { background: #f8fafc; padding: 1.2rem 1rem; transition: 0.2s; }
+        .results-table tr:hover td { background: #f1f5f9; }
+
+        .results-table td:first-child { border-top-left-radius: 16px; border-bottom-left-radius: 16px; font-weight: 700; }
+        .results-table td:last-child { border-top-right-radius: 16px; border-bottom-right-radius: 16px; }
+
+        .badge-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+        .status-verified { background: #dcfce7; color: #166534; }
+        .status-pending { background: #fef9c3; color: #854d0e; }
+        .student-view { display: none; animation: fadeIn 0.35s ease; }
+        .student-view.active { display: block; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+        .info-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 22px;
+            padding: 1.5rem;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
+        }
+        .info-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .info-card p { margin: 0; font-size: 0.92rem; }
+        .fee-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border-radius: 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .db-sidebar { width: 80px; padding: 2rem 1rem; }
+            .db-logo span { display: none; }
+            .db-nav-item span { display: none; }
+            .db-main { margin-left: 80px; padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="db-sidebar">
+        <!-- Animated Background Birds -->
+        <div class="sidebar-birds">
+            <div class="bird" style="left: 10%; animation-duration: 8s; animation-delay: 0s;">🕊️</div>
+            <div class="bird" style="left: 40%; animation-duration: 12s; animation-delay: -5s;">🕊️</div>
+            <div class="bird" style="left: 70%; animation-duration: 10s; animation-delay: -2s;">🕊️</div>
+            <div class="bird" style="left: 20%; animation-duration: 15s; animation-delay: -8s;">🕊️</div>
+            <div class="bird" style="left: 80%; animation-duration: 9s; animation-delay: -3s;">🕊️</div>
+        </div>
+
+        <a href="index.html" class="logo" style="margin-bottom: 3rem;">
+            <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" style="height: 80px; width: auto;">
+        </a>
+
+        <nav>
+            <a href="javascript:void(0)" onclick="switchStudentView('overview')" class="db-nav-item active" id="student-nav-overview">🏠 <span>Dashboard</span></a>
+            <a href="javascript:void(0)" onclick="switchStudentView('tests')" class="db-nav-item" id="student-nav-tests">📝 <span>Mock Tests</span></a>
+            <a href="javascript:void(0)" onclick="switchStudentView('curriculum')" class="db-nav-item" id="student-nav-curriculum">📚 <span>Curriculum</span></a>
+            <a href="study-material.html" class="db-nav-item">📖 <span>NCERT Books</span></a>
+            <a href="javascript:void(0)" onclick="switchStudentView('performance')" class="db-nav-item" id="student-nav-performance">🎯 <span>Performance</span></a>
+            <a href="javascript:void(0)" onclick="switchStudentView('fees')" class="db-nav-item" id="student-nav-fees">💳 <span>Fee Status</span></a>
+        </nav>
+
+        <div style="margin-top: auto;">
+            <a href="javascript:void(0)" onclick="logout()" class="db-nav-item" style="color: #ef4444;">🚪 <span>Logout</span></a>
+        </div>
+    </aside>
+
+    <main class="db-main">
+        <header class="db-header">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800;" id="welcome-text">Namaste!</h1>
+                <p id="live-time-date" style="color: #64748b; margin-top: 0.2rem; font-weight: 500;">Initializing live data...</p>
+            </div>
+
+            <div style="display: flex; gap: 1.5rem; align-items: center;">
+                <div class="profile-trigger">
+                    <div class="profile-img" id="user-initial">?</div>
+                    <div style="text-align: left;">
+                        <div style="font-size: 0.85rem; font-weight: 800;" id="user-fullname">Student</div>
+                        <div style="font-size: 0.7rem; color: #64748b;" id="user-role">Premium Flight</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="student-view-overview" class="student-view active">
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="stat-tests">0</div>
+                <div class="stat-label">Tests Attempted</div>
+            </div>
+            <div class="stat-card" style="border-left: 5px solid var(--db-primary);">
+                <div class="stat-value" id="stat-avg">0%</div>
+                <div class="stat-label">Avg. Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-days">3</div>
+                <div class="stat-label">Trial Days Remaining</div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><span>📚</span> Your Learning Track</h2>
+        <div class="course-grid">
+            <div class="course-card">
+                <span class="course-tag">IIT-JEE 2026</span>
+                <h3 style="font-weight: 800; margin-bottom: 0.5rem;">Physics Master Program</h3>
+                <p style="color: #64748b; font-size: 0.85rem;">Currently: Electromagnetism - Gauss Law</p>
+                <div class="course-progress"><div class="progress-fill" style="width: 65%;"></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">65% Completed</span>
+                    <button class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.8rem;">Resume Study</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <span class="course-tag" style="background: #fdf2f2; color: #991b1b;">ADVANCED</span>
+                <h3 style="font-weight: 800; margin-bottom: 0.5rem;">Organic Chemistry Special</h3>
+                <p style="color: #64748b; font-size: 0.85rem;">Currently: Reaction Mechanisms</p>
+                <div class="course-progress"><div class="progress-fill" style="width: 32%; background: #f87171;"></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">32% Completed</span>
+                    <button class="btn btn-outline" style="padding: 0.5rem 1.2rem; font-size: 0.8rem;">Start Chapter</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><span>🏆</span> Recent Performances</h2>
+        <div style="overflow-x: auto;">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Subject / Course</th>
+                        <th>Score Obtained</th>
+                        <th>Date & Time</th>
+                        <th>Admin Status</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody id="res-tbody">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </div>
+        </section>
+
+        <section id="student-view-tests" class="student-view">
+            <h2 class="section-title"><span>📝</span> Mock Tests</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Weekly Mock Test</h3>
+                    <p>Course-wise practice test with admin-reviewed result and solution PDF.</p>
+                    <a href="mock-test.html" class="btn btn-primary" style="margin-top: 1rem;">Start Test</a>
+                </div>
+                <div class="info-card">
+                    <h3>Result Approval Flow</h3>
+                    <p>Your submitted test goes to admin first. Once approved, solution download appears in your performance table.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Best Use</h3>
+                    <p>Use this before each weekly class review to track weak areas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="student-view-curriculum" class="student-view">
+            <h2 class="section-title"><span>📚</span> Curriculum</h2>
+            <div class="info-grid">
+                <div class="info-card"><h3>Physics</h3><p>Electrostatics, Current Electricity, Mechanics revision and practice sheets.</p></div>
+                <div class="info-card"><h3>Chemistry</h3><p>Organic mechanisms, Physical numericals, NCERT key points.</p></div>
+                <div class="info-card"><h3>NCERT Textbooks</h3><p>Class 1 to 12 official NCERT PDF library is available in Study Material.</p><a href="study-material.html" class="btn btn-primary" style="margin-top: 1rem;">Open Study Material</a></div>
+            </div>
+        </section>
+
+        <section id="student-view-performance" class="student-view">
+            <h2 class="section-title"><span>🎯</span> Performance</h2>
+            <div class="info-grid">
+                <div class="info-card"><h3>Accuracy</h3><p id="perf-accuracy">Attempt tests to calculate your accuracy.</p></div>
+                <div class="info-card"><h3>Admin Feedback</h3><p>Approved test results and released solutions show in Recent Performances.</p></div>
+                <div class="info-card"><h3>Next Target</h3><p>Complete one mock test every week and revise mistakes from solution PDFs.</p></div>
+            </div>
+        </section>
+
+        <section id="student-view-fees" class="student-view">
+            <h2 class="section-title"><span>💳</span> Fee Status</h2>
+            <div class="fee-box">
+                <div>
+                    <strong id="fee-status-title">Checking fee status...</strong>
+                    <p id="fee-status-desc" style="margin: 0;">Your trial/payment details will appear here.</p>
+                </div>
+                <a href="payment.html" class="btn btn-primary">Pay Fee</a>
+            </div>
+            <div class="info-grid">
+                <div class="info-card"><h3>Student ID</h3><p id="student-id-view">Generated after signup.</p></div>
+                <div class="info-card"><h3>Use Case</h3><p>Use fee page to submit payment details and keep access active after trial.</p></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('udaan-user-session') || 'null');
+            if(!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            if ((user.role || 'student') !== 'student') {
+                window.location.href = user.role === 'faculty' ? 'faculty-dashboard.html' : 'admin-panel.html';
+                return;
+            }
+
+            // Live Clock & Weather
+            function updateLiveInfo() {
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateStr = now.toLocaleDateString('en-IN', options);
+                const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+                document.getElementById('live-time-date').innerHTML = `<span style="color:var(--db-primary)">${timeStr}</span> | ${dateStr}`;
+
+                // Dynamic Greeting
+                const hour = now.getHours();
+                let greet = "Namaste";
+                if(hour < 12) greet = "Good Morning";
+                else if(hour < 17) greet = "Good Afternoon";
+                else greet = "Good Evening";
+                document.getElementById('welcome-text').innerText = `${greet}, ${user.name.split(' ')[0]}! 👋`;
+            }
+
+            updateLiveInfo();
+            setInterval(updateLiveInfo, 1000);
+
+            // Populate Additional Profile Data
+            document.getElementById('user-fullname').innerText = user.name;
+            document.getElementById('user-initial').innerText = user.name[0].toUpperCase();
+            document.getElementById('user-role').innerText = user.course + ' Student';
+
+            // Stats
+            const results = JSON.parse(localStorage.getItem('udaan-results') || '[]');
+            const myResults = results.filter(r => r.student === user.name);
+            document.getElementById('stat-tests').innerText = myResults.length;
+
+            if(myResults.length > 0) {
+                const totalScore = myResults.reduce((acc, r) => acc + (r.score / r.total), 0);
+                const avg = Math.round((totalScore / myResults.length) * 100);
+                document.getElementById('stat-avg').innerText = avg + '%';
+                document.getElementById('perf-accuracy').innerText = `Your current average accuracy is ${avg}%.`;
+            }
+
+            // Trial Check
+            const now = Date.now();
+            const trialLimit = 3 * 24 * 60 * 60 * 1000;
+            const elapsed = now - user.joinedAt;
+            const remaining = Math.max(0, Math.ceil((trialLimit - elapsed) / (1000 * 60 * 60 * 24)));
+            document.getElementById('stat-days').innerText = user.paid ? '∞' : remaining;
+            document.getElementById('fee-status-title').innerText = user.paid ? 'Fee Paid - Full Access Active' : `${remaining} trial day(s) remaining`;
+            document.getElementById('fee-status-desc').innerText = user.paid ? 'You can access tests, results and study content without trial limits.' : 'Complete fee payment to continue access after trial.';
+            document.getElementById('student-id-view').innerText = user.id || 'Not assigned for this demo account';
+
+            // Render Results
+            const tbody = document.getElementById('res-tbody');
+            if(myResults.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 2rem; color: #64748b;">Take your first test to see performance data.</td></tr>`;
+            } else {
+                myResults.reverse().forEach(res => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${res.course} Mock Test</td>
+                        <td><span style="font-weight: 800; color: var(--db-primary);">${res.score}</span> / ${res.total}</td>
+                        <td style="font-size: 0.8rem; color: #64748b;">${res.date}</td>
+                        <td><span class="badge-status ${res.approved ? 'status-verified' : 'status-pending'}">${res.approved ? 'VERIFIED' : 'PENDING'}</span></td>
+                        <td>${res.approved ? `<a href="${res.solutionPdf || '#'}" target="_blank" style="color: var(--db-primary); font-weight: 700; font-size: 0.8rem;">Download PDF</a>` : '---'}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('udaan-user-session');
+            localStorage.removeItem('udaan-student-name');
+            window.location.href = 'index.html';
+        }
+
+        function switchStudentView(viewId) {
+            document.querySelectorAll('.student-view').forEach(view => view.classList.remove('active'));
+            document.getElementById('student-view-' + viewId).classList.add('active');
+            document.querySelectorAll('.db-nav-item').forEach(item => item.classList.remove('active'));
+            const nav = document.getElementById('student-nav-' + viewId);
+            if (nav) nav.classList.add('active');
+        }
+    </script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>

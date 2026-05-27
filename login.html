@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Log In to Udaan - role based student, faculty, and admin access.">
+    <meta name="theme-color" content="#06b6d4">
+    <title>Log In | Udaan Coaching</title>
+    <link rel="icon" href="./assets/images/logo.svg" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header class="navbar scrolled">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="./assets/images/logo.svg" alt="Udaan Coaching Logo" class="logo-img" style="height: 70px;">
+            </a>
+            <div class="nav-actions">
+                <a href="index.html" class="btn btn-outline" data-i18n="nav-home">Home</a>
+                <div class="lang-switcher">
+                    <button id="lang-en" class="lang-btn active">EN</button>
+                    <button id="lang-hi" class="lang-btn">हिं</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-bg"></div>
+        <div class="auth-bg-text">UDAAN</div>
+
+        <div class="glass-card auth-card auth-card-wide fade-up-anim">
+            <div class="auth-header">
+                <h2 data-i18n="login-title">Welcome Back!</h2>
+                <p data-i18n="login-subtitle">Select your role and log in to continue.</p>
+            </div>
+
+            <form id="login-form" class="auth-form">
+                <div id="step-1" class="step-container active">
+                    <div class="role-selector" aria-label="Choose login role">
+                        <label class="role-option active">
+                            <input type="radio" name="role" value="student" checked>
+                            <span class="role-icon"><i class="fas fa-user-graduate"></i></span>
+                            <strong data-i18n="login-student">Student</strong>
+                            <small>Classes, tests, results, fees</small>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="faculty">
+                            <span class="role-icon"><i class="fas fa-chalkboard-user"></i></span>
+                            <strong data-i18n="login-faculty">Faculty</strong>
+                            <small>Batches, attendance, tests</small>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="admin">
+                            <span class="role-icon"><i class="fas fa-user-shield"></i></span>
+                            <strong data-i18n="login-admin">Admin</strong>
+                            <small>Admissions, fees, reports</small>
+                        </label>
+                    </div>
+
+                    <div class="role-use-panel" id="role-use-panel"></div>
+
+                    <div class="form-group">
+                        <label for="contact" class="form-label" data-i18n="login-contact">Username / Mobile No. / Email ID</label>
+                        <input type="text" id="contact" name="contact" class="form-input" placeholder="Enter contact detail" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label" data-i18n="login-password">Password</label>
+                        <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="auth-row">
+                        <label class="auth-check">
+                            <input type="checkbox" id="remember">
+                            <span data-i18n="login-remember">Remember me</span>
+                        </label>
+                        <a href="contact.html" class="auth-link" data-i18n="login-forgot">Forgot Password?</a>
+                    </div>
+
+                    <button type="button" onclick="verifyCredentials()" class="btn btn-primary btn-lg auth-btn shadow-pulse" data-i18n="login-verify">Verify & Continue</button>
+                </div>
+
+                <div id="step-2" class="step-container">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔐</div>
+                        <h3 data-i18n="login-security-title">Security Check</h3>
+                        <p data-i18n="login-security-desc">Enter the 6-digit security code sent to your registered contact.</p>
+                    </div>
+
+                    <div class="otp-container">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp2')" id="otp1">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp3')" id="otp2">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp4')" id="otp3">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp5')" id="otp4">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'otp6')" id="otp5">
+                        <input type="text" maxlength="1" class="otp-box" onkeyup="moveNext(this, 'login-btn')" id="otp6">
+                    </div>
+
+                    <button type="submit" id="login-btn" class="btn btn-primary btn-lg auth-btn shadow-pulse" data-i18n="login-confirm">Confirm Login</button>
+                    <button type="button" onclick="goToStep(1)" class="auth-back-btn" data-i18n="login-change">← Change Details</button>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <span data-i18n="login-footer">New student?</span> <a href="signup.html" data-i18n="btn-signup">Sign Up</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentUser = null;
+        const generatedOTP = "123456";
+        const roleContent = {
+            student: {
+                title: "Student Portal Use Cases",
+                access: "Student access",
+                points: ["Join classes and resume learning", "Attempt mock tests", "View approved results and solutions", "Check trial and fee status"]
+            },
+            faculty: {
+                title: "Faculty Portal Use Cases",
+                access: "Faculty access",
+                points: ["View assigned batches", "Track attendance and doubt sessions", "Review test submissions", "Plan upcoming classes"]
+            },
+            admin: {
+                title: "Admin Portal Use Cases",
+                access: "Admin access",
+                points: ["Manage student registry", "Approve results and solution PDFs", "Mark fee status", "Monitor courses and reports"]
+            }
+        };
+
+        (function initSampleUsers() {
+            const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+            const requiredUsers = [
+                {
+                    name: "Sample Topper",
+                    mobile: "9876543210",
+                    email: "student@udaan.com",
+                    pass: "student123",
+                    role: "student",
+                    id: "UDN-START-001",
+                    course: "JEE",
+                    joinedAt: Date.now(),
+                    paid: true
+                },
+                {
+                    name: "Udaan Faculty",
+                    mobile: "9000000001",
+                    email: "faculty@udaan.com",
+                    pass: "faculty123",
+                    role: "faculty",
+                    subject: "Physics",
+                    batches: ["JEE Morning A", "Foundation Evening B"],
+                    joinedAt: Date.now(),
+                    paid: true
+                },
+                {
+                    name: "Udaan Admin",
+                    mobile: "9000000000",
+                    email: "admin@udaan.com",
+                    pass: "admin123",
+                    role: "admin",
+                    joinedAt: Date.now(),
+                    paid: true
+                }
+            ];
+
+            requiredUsers.forEach(sample => {
+                const existing = users.find(user => user.mobile === sample.mobile || user.email === sample.email || user.id === sample.id);
+                if (existing) {
+                    Object.assign(existing, { ...sample, ...existing, id: existing.id || sample.id, role: existing.role || sample.role });
+                } else {
+                    users.push(sample);
+                }
+            });
+
+            localStorage.setItem('udaan-users-db', JSON.stringify(users));
+        })();
+
+        function selectedRole() {
+            return document.querySelector('input[name="role"]:checked').value;
+        }
+
+        function updateRolePanel() {
+            const role = selectedRole();
+            const content = roleContent[role];
+
+            document.querySelectorAll('.role-option').forEach(option => {
+                option.classList.toggle('active', option.querySelector('input').value === role);
+            });
+
+            document.getElementById('role-use-panel').innerHTML = `
+                <div class="role-use-head">
+                    <strong>${content.title}</strong>
+                </div>
+                <ul>${content.points.map(point => `<li>${point}</li>`).join('')}</ul>
+            `;
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('.step-container').forEach(c => c.classList.remove('active'));
+            document.getElementById('step-' + step).classList.add('active');
+        }
+
+        function moveNext(curr, nextId) {
+            if (curr.value.length === 1) {
+                const next = document.getElementById(nextId);
+                if (next) next.focus();
+            }
+        }
+
+        function verifyCredentials() {
+            const contact = document.getElementById('contact').value.trim();
+            const pass = document.getElementById('password').value;
+            const role = selectedRole();
+            const users = JSON.parse(localStorage.getItem('udaan-users-db') || '[]');
+            const found = users.find(user => {
+                const identityMatch = user.mobile === contact || user.email === contact || user.id === contact;
+                return identityMatch && user.pass === pass && (user.role || 'student') === role;
+            });
+
+            if (found) {
+                currentUser = found;
+                goToStep(2);
+            } else {
+                alert("Invalid details for selected role. Please check role, username and password.");
+            }
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const otp = document.getElementById('otp1').value +
+                        document.getElementById('otp2').value +
+                        document.getElementById('otp3').value +
+                        document.getElementById('otp4').value +
+                        document.getElementById('otp5').value +
+                        document.getElementById('otp6').value;
+
+            if (otp === generatedOTP && currentUser) {
+                localStorage.setItem('udaan-user-session', JSON.stringify(currentUser));
+
+                if ((currentUser.role || 'student') === 'admin') {
+                    localStorage.setItem('udaan-admin-session', 'active');
+                    window.location.href = 'admin-panel.html';
+                } else if (currentUser.role === 'faculty') {
+                    window.location.href = 'faculty-dashboard.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            } else {
+                alert("Invalid security code. Please try again or contact support.");
+            }
+        });
+
+        document.querySelectorAll('input[name="role"]').forEach(input => {
+            input.addEventListener('change', updateRolePanel);
+        });
+        updateRolePanel();
+    </script>
+    <script src="./assets/js/translations.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
